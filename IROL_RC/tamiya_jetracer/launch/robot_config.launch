@@ -1,0 +1,47 @@
+<launch> 
+  <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+    <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
+    <param name="serial_baudrate"     type="int"    value="115200"/><!--A1/A2 -->
+    <!--param name="serial_baudrate"     type="int"    value="256000"--><!--A3 -->
+    <param name="frame_id"            type="string" value="laser"/>
+    <param name="inverted"            type="bool"   value="false"/>
+    <param name="angle_compensate"    type="bool"   value="true"/>
+  </node>
+  
+  <arg name = "model" default = "$(find tamiya_description)/urdf/tamiya.urdf" />
+  <!-- <arg name = "rvizconfig" default = "$(find vehivle_model_description)/urdf.rviz" />  -->
+   
+   
+
+  <param name = "robot_description" command = "$(find xacro)/xacro --inorder '$(arg model)'" />
+  
+  <param name="laser_min_dist" value = "0.15" />
+  <param name="laser_max_dist" value = "12" />
+
+  <node name = "joint_state_publisher" pkg = "joint_state_publisher" type = "joint_state_publisher" />
+  <node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "robot_state_publisher"/>
+
+  <arg name="geotiff_map_file_path" default="$(find hector_geotiff)/maps"/>
+
+  <param name="/use_sim_time" value="false"/>
+
+  <node pkg="rviz" type="rviz" name="rviz"
+    args="-d $(find tamiya_jetracer)/rviz/tamiya.rviz"/>
+
+  <include file="$(find hector_mapping)/launch/mapping_default.launch"/>
+
+  <include file="$(find hector_geotiff)/launch/geotiff_mapper.launch">
+    <arg name="trajectory_source_frame_name" value="scanmatcher_frame"/>
+    <arg name="map_file_path" value="$(arg geotiff_map_file_path)"/>
+  </include>
+
+
+
+
+  <!-- <node name = "rviz" pkg = "rviz" type = "rviz" args = "-d $(find rplidar_ros)/rviz/rplidar.rviz" required = "true"/> -->
+  <!-- <node name = "rviz" pkg = "rviz" type = "rviz" required = "true"/> -->
+
+
+  <!-- <node pkg="tf" type="static_transform_publisher" name="base_to_laser_broadcaster" args="0 0 0 0 0 0 base_link laser 100"/> -->
+  
+</launch>
