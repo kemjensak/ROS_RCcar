@@ -1,0 +1,16 @@
+<launch> 
+    
+    <arg name="load_map_file_path" default="$(find tamiya_jetracer)/maps/saved"/>
+    <node name="map_server" pkg="map_server" type="map_saver" args="-f $(arg load_map_file_path)" />
+
+
+
+
+
+  <!-- <node name = "rviz" pkg = "rviz" type = "rviz" args = "-d $(find rplidar_ros)/rviz/rplidar.rviz" required = "true"/> -->
+  <!-- <node name = "rviz" pkg = "rviz" type = "rviz" required = "true"/> -->
+
+
+  <!-- <node pkg="tf" type="static_transform_publisher" name="base_to_laser_broadcaster" args="0 0 0 0 0 0 base_link laser 100"/> -->
+  
+</launch>
