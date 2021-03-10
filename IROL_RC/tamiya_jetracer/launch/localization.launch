@@ -62,7 +62,6 @@
     <param name="update_min_a" value="0.25"/>
     <param name="odom_frame_id" value="scanmatch_odom"/>
     <param name="resample_interval" value="1"/>
-    <param name="transform_tolerance" value="0.1"/>
     <param name="recovery_alpha_slow" value="0.0"/>
     <param name="recovery_alpha_fast" value="0.0"/>
     <param name="first_map_only" value="true"/>
@@ -127,7 +126,7 @@
     <rosparam file="$(find tamiya_jetracer)/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find tamiya_jetracer)/global_costmap_params.yaml" command="load" /> 
     <rosparam file="$(find tamiya_jetracer)/base_local_planner_params.yaml" command="load" />
-    <!-- <rosparam file="$(find tamiya_jetracer)/dwa_local_planner_params.yaml" command="load" /> -->
+    <rosparam file="$(find tamiya_jetracer)/dwa_local_planner_params.yaml" command="load" />
     <!-- <rosparam file="$(find tamiya_jetracer)/teb_local_planner_params.yaml" command="load" /> -->
 
     <rosparam file="$(find tamiya_jetracer)/move_base_params.yaml" command="load" />
@@ -137,9 +136,9 @@
     
 
     <param name="base_global_planner" value="global_planner/GlobalPlanner" />
-    <!-- <param name="DWAPlannerROS/global_frame_id" value="map" /> -->
+    <param name="DWAPlannerROS/global_frame_id" value="map" />
     <param name="planner_frequency" value="10.0" />
-    <param name="planner_patience" value="5.0" />
+    <param name="planner_patience" value="15.0" />
 
     <!-- <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" /> -->
     <param name="controller_frequency" value="10.0" />
