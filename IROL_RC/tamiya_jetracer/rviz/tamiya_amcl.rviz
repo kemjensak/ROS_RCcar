@@ -112,17 +112,17 @@ Visualization Manager:
         base_link:
           Value: true
         laser:
-          Value: false
+          Value: true
         left_front_wheel_link:
-          Value: false
+          Value: true
         left_rear_wheel_link:
-          Value: false
+          Value: true
         map:
           Value: true
         right_front_wheel_link:
-          Value: false
+          Value: true
         right_rear_wheel_link:
-          Value: false
+          Value: true
         scanmatch_odom:
           Value: true
       Marker Scale: 1
@@ -246,7 +246,7 @@ Visualization Manager:
       Buffer Length: 1
       Class: rviz/Path
       Color: 25; 255; 0
-      Enabled: true
+      Enabled: false
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
       Length: 0.30000001192092896
@@ -264,7 +264,7 @@ Visualization Manager:
       Shaft Length: 0.10000000149011612
       Topic: /move_base/TrajectoryPlannerROS/global_plan
       Unreliable: false
-      Value: true
+      Value: false
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
@@ -334,6 +334,29 @@ Visualization Manager:
       Topic: ""
       Unreliable: false
       Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic: /move_base/TrajectoryPlannerROS/local_plan
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -362,25 +385,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 5.551251411437988
+      Distance: 50.99182891845703
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.015408635139465332
-        Y: 1.1110315322875977
-        Z: -1.1244424058531877e-8
+        X: -6.368958950042725
+        Y: -8.91549015045166
+        Z: 1.4129951523500495e-5
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.9847604036331177
+      Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 1.5954002141952515
+      Yaw: 1.5554001331329346
     Saved: ~
 Window Geometry:
   Displays:

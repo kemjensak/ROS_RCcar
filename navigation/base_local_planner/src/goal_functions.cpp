@@ -38,6 +38,7 @@
 #include <tf2/LinearMath/Matrix3x3.h>
 #include <tf2/utils.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf2_ros/transform_listener.h>
 #ifdef _MSC_VER
 #define GOAL_ATTRIBUTE_UNUSED
 #else
@@ -108,6 +109,12 @@ namespace base_local_planner {
     }
 
     const geometry_msgs::PoseStamped& plan_pose = global_plan[0];
+
+    tf2_ros::Buffer tfBuffer;
+
+    tf2_ros::TransformListener tfListener(tfBuffer);
+
+    while(!tfBuffer.canTransform("base_link", "map", ros::Time(), ros::Duration(1.0)));
     try {
       // get plan_to_global_transform from plan frame to global_frame
       geometry_msgs::TransformStamped plan_to_global_transform = tf.lookupTransform(global_frame, ros::Time(),
@@ -181,6 +188,13 @@ namespace base_local_planner {
     }
 
     const geometry_msgs::PoseStamped& plan_goal_pose = global_plan.back();
+    
+    tf2_ros::Buffer tfBuffer;
+
+    tf2_ros::TransformListener tfListener(tfBuffer);
+
+    while(!tfBuffer.canTransform("base_link", "map", ros::Time(), ros::Duration(1.0)));
+    
     try{
       geometry_msgs::TransformStamped transform = tf.lookupTransform(global_frame, ros::Time(),
                          plan_goal_pose.header.frame_id, plan_goal_pose.header.stamp,
