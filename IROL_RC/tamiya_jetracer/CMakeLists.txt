@@ -7,6 +7,19 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   urdf
   tf
+  message_generation
+)
+
+add_message_files(
+  DIRECTORY msg
+  FILES
+  vesc_feedback.msg
+  vesc_cmd.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
 )
 
 catkin_package(
@@ -28,12 +41,13 @@ include_directories(
 
 
 
-add_executable(${PROJECT_NAME}
+add_executable(odom_publisher
     src/odom_publisher.cpp
 )
-add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+
+add_dependencies(odom_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} 
     ${catkin_EXPORTED_TARGETS})
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(odom_publisher
     ${catkin_LIBRARIES}
 )

@@ -1,0 +1,11 @@
+<launch>
+
+    <arg name="node_start_delay" default="1.0" />  
+
+    <rosparam command="load" file="$(find mobile_robot)/cfg/mobile_robot_odometry.yaml" />
+
+
+    <node pkg="tamiya_jetracer" name="vesc_controller" type="vesc_controller.py" output="screen"> </node>
+    <!-- <node pkg="tamiya_jetracer" name="odom_publisher" type="odom_publisher" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' " output="screen"> </node> -->
+
+</launch>
