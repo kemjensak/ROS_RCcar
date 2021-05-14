@@ -7,7 +7,9 @@ from std_msgs.msg import Float32
 import geometry_msgs.msg 
 from tamiya_jetracer.msg import vesc_cmd
 from math import *
-
+import roslib
+import tf
+import turtlesim.msg
 
 
 # serial port that VESC is connected to. Something like "COM3" for windows and as below for linux/mac
@@ -20,9 +22,8 @@ ms_per_speed = (meter_per_rotate * wheel_rpm_per_speed) / 60
 speed_per_ms = 1 / ms_per_speed
 wheelbase = 0.257
 
-x = vx = y = vy = th = vth = steer_rad = 0.0
-currnet_tacho = last_tacho =0
-last_time = currnet_time = 0.0
+x, y, theta = 0.0
+
 steer_offset = 0
 
 speed_cmd = 0
@@ -31,34 +32,9 @@ steer_cmd = 50 + steer_offset
 
 
 def callback(data):
-    global speed_cmd, steer_cmd, steer_rad
+    global speed_cmd, steer_cmd
     speed_cmd = data.linear.x
-    steer_rad = atan(wheelbase / data.linear.x * data.angular.z)
-    steer_cmd = degrees(steer_rad)
-
-def cal_odom(delta_tacho, vth): #vth = steer_rad
-    global x, y, th
-    if last_time == 0 or :
-        return
-    else:
-        current_time = time.time()
-        dt = current_time - last_time
-
-        v = (delta_tacho * meter_per_pulse) / dt
-        # vth = (v / wheelbase) * tan(steer)
-        vx = v * cos(th)
-        vy = v * sin(th)
-
-        delta_x = (vx * cos(th) - vy * sin(th)) * dt
-        delta_y = (vx * sin(th) + vy * cos(th)) * dt
-        delta_th = vth * dt
-
-        x += delta_x
-        y += delta_y
-        th += delta_th
-    last_time = time.time()
-
-
+    steer_cmd = degrees(atan(wheelbase / data.linear.x * data.angular.z)) 
 
 def set_and_get_speed(speed, steer, count):
     while True:
@@ -82,12 +58,20 @@ def set_and_get_speed(speed, steer, count):
 
     return tacho
 
+def handle_robot_pose(name):
+    # global x, y, theta
+    br = tf.TransformBroadcaster()
+    br.sendTransform((x, y, 0),
+                    tf.transformations.quaternion_from_euler(0, 0, theta),
+                    rospy.Time.now(),
+                    name,
+                    "scanmatch_odom")
+
 
 if __name__ == '__main__':
 
     rospy.init_node('vesc', anonymous=True)
-    
-    pub =  rospy.Publisher('/vesc_feedback', geometry_msgs.msg.Twist, queue_size=10)
+    pub =  rospy.Publisher('/vesc_feedback', Int16, queue_size=10)
     
     rospy.Subscriber("/cmd_vel",geometry_msgs.msg.Twist ,callback)
     
@@ -98,18 +82,13 @@ if __name__ == '__main__':
 
 
     while not rospy.is_shutdown():
-        now = rospy.get_rostime()
-        # print(speed_cmd)
-        print(time.time())
-        # rospy.sleep(0.01)
         
-        current_tacho = set_and_get_speed(0, steer_cmd, 10)
-        if last_tacho != 0
-        delta_tacho = current_tacho - last_tacho
-        cal_odom(delta_tacho, vth)
-        last_tacho
-        # print(ms_per_speed)
-        # print(encoder)
+        # print(speed_cmd)
+        
+        # rospy.sleep(0.01)
+        encoder = set_and_get_speed(speed_per_ms, steer_cmd, 10)
+        print(ms_per_speed)
+        print(encoder)
         
         rate.sleep()
         
