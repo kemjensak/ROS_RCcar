@@ -1,0 +1,3 @@
+mobile_robot_odometry:
+  base_link_id: "/base_link"
+  odom_link_id: "/scanmatch_odom"

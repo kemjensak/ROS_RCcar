@@ -24,17 +24,23 @@ wheelbase = 0.257
 x = vx = y = vy = th = vth = steer_rad = 0.0
 currnet_tacho = last_tacho = 0
 last_time = currnet_time = 0.0
-steer_offset = 0
+steer_offset = -2
 
 speed_cmd = 0
-steer_cmd = 50 + steer_offset
+steer_cmd = 0 + steer_offset
 
 
 
 def callback(data):
     global speed_cmd, steer_cmd, steer_rad
-    speed_cmd = data.linear.x
-    steer_rad = atan(wheelbase / data.linear.x * data.angular.z)
+    if 0.1 < data.linear.x < 0.4:
+        data.linear.x = 0.4
+    speed_cmd = data.linear.x * speed_per_ms
+    if data.linear.x != 0:
+        steer_rad = atan(wheelbase / data.linear.x * data.angular.z)
+    else:
+        steer_rad = 0
+    msg.steer.data = steer_rad
     steer_cmd = degrees(steer_rad)
 
 
@@ -45,7 +51,7 @@ def set_and_get_speed(speed, steer, count):
             if count == 0:
                 return "Err"
             # rospy.sleep(0.01)
-            motor.set_servo((steer + steer_offset) / 100)
+            motor.set_servo((50 - steer + steer_offset) / 100)
             rospy.sleep(0.01)
             motor.set_rpm(int(-speed*100))
             # motor.set_duty_cycle(speed/100)
@@ -67,9 +73,10 @@ def set_and_get_speed(speed, steer, count):
 def publisher(tacho_pub, steer_pub):
     print(tacho_pub)
     msg = vesc_feedback()
+
     msg.tacho.data = int(tacho_pub)
-    
     msg.steer.data = int(steer_pub)
+
     pub.publish(msg)
     print("pubed")
 
@@ -86,7 +93,7 @@ if __name__ == '__main__':
     rospy.Subscriber("/cmd_vel",geometry_msgs.msg.Twist ,callback)
     
     
-    rate = rospy.Rate(20)
+    rate = rospy.Rate(10)
 
     motor = VESC(serial_port=serial_port)
 
@@ -101,11 +108,11 @@ if __name__ == '__main__':
         # current_tacho = set_and_get_speed(8, steer_cmd, 10)
         
         msg.tacho.data = set_and_get_speed(speed_cmd, steer_cmd, 10) - init_tacho
-        msg.steer.data = int(steer_rad)
+        
         pub.publish(msg)
-
+        # print(ms_per_speed * 9)
         # print(current_tacho,type(currnet_tacho))
-        print(msg.tacho.data)
+        # print(msg.tacho.data)
         
         
 

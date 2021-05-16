@@ -10,10 +10,12 @@ namespace mobile_robot_odometry
 	, th(0.0)
     {
         sub = nh.subscribe("/vesc_feedback", 100, &MobileRobotOdomety::storeFeedback, this);
-        odomPub = nh.advertise<nav_msgs::Odometry>("/custom_odom",100);
-
-        if(!private_nh.getParam("base_link_id", base_link_id)) throw std::runtime_error("set base_link_id");
-        if(!private_nh.getParam("odom_link_id", odom_link_id)) throw std::runtime_error("set odom_link_id");
+        odomPub = nh.advertise<nav_msgs::Odometry>("/scanmatch_odom",100);
+        base_link_id = "/base_link";
+        odom_link_id = "/scanmatch_odom";
+        // while((!private_nh.getParam("base_link_id", base_link_id))|(!private_nh.getParam("odom_link_id", odom_link_id))) ros::Duration(0.5).sleep();
+        // if(!private_nh.getParam("base_link_id", base_link_id)) throw std::runtime_error("set base_link_id");
+        // if(!private_nh.getParam("odom_link_id", odom_link_id)) throw std::runtime_error("set odom_link_id");
         // if(!private_nh.getParam("leftwheel_linkname", wheel_1_id)) throw std::runtime_error("set wheel_1_id");
         // if(!private_nh.getParam("rightwheel_linkname", wheel_3_id)) throw std::runtime_error("set wheel_3_id");
         // if(!private_nh.getParam("separation_length", separation_length)) throw std::runtime_error("set separation_length");

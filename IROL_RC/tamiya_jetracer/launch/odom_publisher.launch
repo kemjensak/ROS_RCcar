@@ -2,7 +2,8 @@
 
     <arg name="node_start_delay" default="1.0" />  
 
-    <rosparam command="load" file="$(find mobile_robot)/cfg/mobile_robot_odometry.yaml" />
+    <!-- <rosparam command="load" file="$(find tamiya_jetracer/cfg/mobile_robot_odometry.yaml" /> -->
+    
 
 
     <node pkg="tamiya_jetracer" name="vesc_controller" type="vesc_controller.py" output="screen"> </node>

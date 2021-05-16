@@ -2,7 +2,12 @@
 
   <rosparam command="load" file="$(find tamiya_jetracer)/cfg/mobile_robot_odometry.yaml" />
 
+  <arg name = "model" default = "$(find tamiya_description)/urdf/tamiya.urdf" />
+  <arg name="load_map_file_path" default="$(find tamiya_jetracer)/maps/mymap.yaml"/>
+
   <node pkg="tamiya_jetracer" name="vesc_controller" type="vesc_controller.py" output="screen"> </node>
+  <!-- <node pkg="tamiya_jetracer" name="odom_publisher" type="odom_publisher" output="screen"> </node> -->
+
 
   <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
     <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
@@ -13,19 +18,19 @@
     <param name="angle_compensate"    type="bool"   value="true"/>
   </node>
   <param name="/use_sim_time" value="false" />
-  <arg name = "model" default = "$(find tamiya_description)/urdf/tamiya.urdf" />
-  <arg name="load_map_file_path" default="$(find tamiya_jetracer)/maps/mymap.yaml"/>
+ 
+  
   
   <!-- Load robot_description -->
-  <param name = "robot_description" command = "$(find xacro)/xacro --inorder '$(arg model)'" />
+  
 
   <!-- Run the map server -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg load_map_file_path)" />
+                                         
+  <!-- <node name = "joint_state_publisher" pkg = "joint_state_publisher" type = "joint_state_publisher" /> -->
+  <!-- <node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "robot_state_publisher"/> -->
 
-  <node name = "joint_state_publisher" pkg = "joint_state_publisher" type = "joint_state_publisher" />
-  <node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "robot_state_publisher"/>
-
-  <node pkg="tf" type="static_transform_publisher" name="base_to_laser_broadcaster" args="0.09 0 0.13 1.57 0 0 base_link laser 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="base_to_laser_broadcaster" args="0.20 0 0.13 1.57 0 0 base_link laser 100"/>
 
   <node name="odomtransformer" pkg="tamiya_jetracer" type="odomtransformer.py" output="screen">
 		<param name="odom_input" value="/scanmatch_odom" />
@@ -47,10 +52,10 @@
     <param name="max_particles" value="5000"/>
     <param name="kld_err" value="0.05"/>
     <param name="kld_z" value="0.99"/>
-    <param name="odom_alpha1" value="0.2"/>
-    <param name="odom_alpha2" value="0.2"/>
+    <param name="odom_alpha1" value="0.8"/>
+    <param name="odom_alpha2" value="0.8"/>
     <!-- translation std dev, m -->
-    <param name="odom_alpha3" value="0.8"/>
+    <param name="odom_alpha3" value="0.2"/>
     <param name="odom_alpha4" value="0.2"/>
     <param name="laser_z_hit" value="0.9"/>
     <param name="laser_z_short" value="0.05"/>
@@ -63,7 +68,7 @@
     <!-- <param name="laser_model_type" value="beam"/> -->
     <param name="laser_likelihood_max_dist" value="5.0"/>
     <param name="update_min_d" value="0.05"/>
-    <param name="update_min_a" value="0.25"/>
+    <param name="update_min_a" value="0.1"/>
     <param name="odom_frame_id" value="scanmatch_odom"/>
     <param name="resample_interval" value="1"/>
     <param name="recovery_alpha_slow" value="0.0"/>
@@ -75,53 +80,7 @@
     <param name="initial_pose_a" value="-1.57"/>
   </node>
   
-    <!-- hector_slam for odom -->
-  <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
-    <remap from="map" to="mapcurrent"/>
-    <!-- Frame names -->
-    <param name="map_frame" value="mapcurrent" />
-    <param name="base_frame" value="base_link"/>
-    <param name="odom_frame" value="scanmatch_odom"/>
     
-    <!-- Tf use -->
-    <param name="use_tf_scan_transformation" value="true"/>
-    <param name="use_tf_pose_start_estimate" value="false"/>
-    <param name="pub_map_odom_transform" value="false"/>
-    <param name="pub_map_scanmatch_transform" value="false"/>
-
-    
-    <!-- Map size / start point -->
-    <param name="map_resolution" value="0.050"/>
-    <param name="map_size" value="2048"/>
-    <param name="map_start_x" value="0.5"/>
-    <param name="map_start_y" value="0.5" />
-    <param name="map_multi_res_levels" value="2" />
-    
-    <!-- Map update parameters -->
-    <param name="update_factor_free" value="0.4"/>
-    <param name="update_factor_occupied" value="0.9" />    
-    <param name="map_update_distance_thresh" value="0.4"/>
-    <param name="map_update_angle_thresh" value="0.06" />
-    <param name="laser_z_min_value" value = "-1.0" />
-    <param name="laser_z_max_value" value = "1.0" />
-    <param name="laser_min_dist" value = "0.15" />
-    <param name="laser_max_dist" value = "12" />
-    
-    <!-- Advertising config --> 
-    <param name="advertise_map_service" value="false"/>
-    
-    <param name="scan_subscriber_queue_size" value="1"/>
-    <param name="scan_topic" value="/scan"/>
-    <param name="pub_odometry" value="true"/>
-    <!-- Debug parameters -->
-    <!--
-      <param name="output_timing" value="false"/>
-      <param name="pub_drawings" value="true"/>
-      <param name="pub_debug_output" value="true"/>
-    -->
-    <param name="tf_map_scanmatch_transform_frame_name" value="scanmatcher_frame" />
-  </node>
-
       
 
  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
@@ -129,9 +88,8 @@
     <rosparam file="$(find tamiya_jetracer)/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find tamiya_jetracer)/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find tamiya_jetracer)/global_costmap_params.yaml" command="load" /> 
-    <rosparam file="$(find tamiya_jetracer)/base_local_planner_params.yaml" command="load" />
+    <!-- <rosparam file="$(find tamiya_jetracer)/base_local_planner_params.yaml" command="load" /> -->
     <rosparam file="$(find tamiya_jetracer)/dwa_local_planner_params.yaml" command="load" />
-    <!-- <rosparam file="$(find tamiya_jetracer)/teb_local_planner_params.yaml" command="load" /> -->
 
     <rosparam file="$(find tamiya_jetracer)/move_base_params.yaml" command="load" />
     <rosparam file="$(find tamiya_jetracer)/global_planner_params.yaml" command="load" />
@@ -139,12 +97,11 @@
 
     
 
-    <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+    <!-- <param name="base_global_planner" value="global_planner/GlobalPlanner" /> -->
     <param name="DWAPlannerROS/global_frame_id" value="map" />
     <param name="planner_frequency" value="10.0" />
     <param name="planner_patience" value="15.0" />
 
-    <!-- <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" /> -->
     <param name="controller_frequency" value="10.0" />
     <param name="controller_patience" value="15.0" />
 
@@ -156,9 +113,9 @@
 
    
 
-
+    <!-- <node pkg="tamiya_jetracer" name="odom_publisher" type="odom_publisher"> </node> -->
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(find tamiya_jetracer)/rviz/tamiya_amcl.rviz"/>
-    <node pkg="tamiya_jetracer" type="controller.py" name="controller" output="screen"/>
+    <!-- <node pkg="tamiya_jetracer" type="controller.py" name="controller" output="screen"/> -->
     <!-- <node pkg="tamiya_jetracer" type="velocity.py" name="vel_pub" output="screen"/> -->
 </launch>
   
