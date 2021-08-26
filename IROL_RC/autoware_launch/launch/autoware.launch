@@ -28,7 +28,7 @@
 	<arg name="kml_map_path" value='$(arg kml_map_path)'/>
   </include>
 
-  <include file="$(find autoware_launch)/launch/stanley.launch">  
+  <include file="$(find autoware_launch)/launch/pure_pursuit_controller.launch">  
   	<arg name='wheel_base' value='$(arg wheel_base)'/>
   </include> 
 

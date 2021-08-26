@@ -138,6 +138,7 @@ class RC_driver():
             self.last_tacho = tacho
             if abs(D_tacho) > self.tacho_jitter_threshold:
                 self.tacho_err += D_tacho
+                err;
             tacho -= self.tacho_err
             
             
@@ -175,7 +176,7 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
         driver.feedback_msg.tacho.data = driver.set_and_get_vesc(driver.speed_cmd, driver.steer_cmd) - driver.init_tacho
         # rospy.loginfo(driver.feedback_msg.tacho.data)
-        rospy.loginfo("speed: %f",driver.speed_cmd)
+        # rospy.loginfo("speed: %f",driver.speed_cmd)
         driver.feedbackPublisher.publish(driver.feedback_msg)
         rate.sleep()
     
