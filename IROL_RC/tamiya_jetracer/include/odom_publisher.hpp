@@ -5,6 +5,7 @@
 #include<cmath>
 #include<gazebo_msgs/LinkStates.h>
 #include<geometry_msgs/Twist.h>
+#include<geometry_msgs/Pose.h>
 #include<vector>
 #include<iostream>
 #include <string>
@@ -47,14 +48,18 @@ namespace mobile_robot_odometry
             ros::Time last_time;
 
             double R = 1.0;
-            double meter_per_pulse = 0.004166666;
-            double meter_per_rotate = 0.205;
-            double wheel_rpm_per_speed = 116.144/9;
+            double meter_per_pulse = 0.004716966;
+            double meter_per_rotate = 0.330;
+            double wheel_rpm_per_speed = 99.4213/9;
             double ms_per_speed = (meter_per_rotate * wheel_rpm_per_speed) / 60;
             double speed_per_ms = 1 / ms_per_speed;
-            double wheelbase = 0.257;
+            double wheelbase = 0.320;
+
+            double dt;
 
             double delta_tacho, tacho, last_tacho, steer;
+
+            float twistCov[36];
 
 
     };

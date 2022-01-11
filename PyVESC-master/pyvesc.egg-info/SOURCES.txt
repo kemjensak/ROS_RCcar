@@ -1,3 +1,4 @@
+LICENSE.txt
 setup.cfg
 setup.py
 pyvesc/__init__.py

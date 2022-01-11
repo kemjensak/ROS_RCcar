@@ -10,9 +10,9 @@ namespace mobile_robot_odometry
 	, th(0.0)
     {
         sub = nh.subscribe("/vesc_feedback", 100, &MobileRobotOdomety::storeFeedback, this);
-        odomPub = nh.advertise<nav_msgs::Odometry>("/scanmatch_odom",100);
-        base_link_id = "/base_link";
-        odom_link_id = "/scanmatch_odom";
+        odomPub = nh.advertise<nav_msgs::Odometry>("/vesc/odom",100);
+        base_link_id = "base_link";
+        odom_link_id = "odom";
         // while((!private_nh.getParam("base_link_id", base_link_id))|(!private_nh.getParam("odom_link_id", odom_link_id))) ros::Duration(0.5).sleep();
         // if(!private_nh.getParam("base_link_id", base_link_id)) throw std::runtime_error("set base_link_id");
         // if(!private_nh.getParam("odom_link_id", odom_link_id)) throw std::runtime_error("set odom_link_id");
@@ -22,6 +22,7 @@ namespace mobile_robot_odometry
     
         last_time = ros::Time::now();
         last_tacho = 0;
+        // float twistCov[36] = [0.2,0,0,0,0,0, 0,0.2,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0.1745]
     }
     
     MobileRobotOdomety::~MobileRobotOdomety()
@@ -47,21 +48,24 @@ namespace mobile_robot_odometry
 
     void MobileRobotOdomety::pubTF(){
         nav_msgs::Odometry odom;
-        double dt = (ros::Time::now() - last_time).toSec();
+        dt = (ros::Time::now() - last_time).toSec();
         delta_tacho = tacho - last_tacho;
         
         v = (delta_tacho * meter_per_pulse) / dt;
+
         vth = (v / wheelbase) * tan(steer);
         vx = v * cos(th);
         vy = v * sin(th);
-
-        delta_x = (vx * cos(th) - vy * sin(th)) * dt;
-        delta_y = (vx * sin(th) + vy * cos(th)) * dt;
+        delta_x = v * dt * cos(th);
+        delta_y = v * dt * sin(th);
+        // delta_x = (vx * cos(th) - vy * sin(th)) * dt;
+        // delta_y = (vx * sin(th) + vy * cos(th)) * dt;
         delta_th = vth * dt;
 
         x += delta_x;
         y += delta_y;
-        th += delta_th;
+        
+        //th += delta_th;
 
         odom.header.seq             = seq++;
         odom.header.stamp           = last_time;
@@ -74,9 +78,10 @@ namespace mobile_robot_odometry
         odom.twist.twist.linear.x   = vx;
         odom.twist.twist.linear.y   = vy;
         odom.twist.twist.angular.z  = vth;
+        odom.twist.covariance = {0.03,0,0,0,0,0, 0,0.03,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0.5445};
 
         odomPub.publish(odom);
-        boardcastTransform();
+        // boardcastTransform();
         last_time = ros::Time::now();
         last_tacho = tacho;
     }
@@ -89,9 +94,11 @@ int main(int argc, char *argv[])
     ros::Rate loop_rate(10); // dt is always 100ms
 
     while(ros::ok()){
-        ros::spinOnce();
+        
         MRO.pubTF();
         loop_rate.sleep();
+        ros::spinOnce();
+        
     }
     return 0;
 }
