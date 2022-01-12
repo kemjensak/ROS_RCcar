@@ -5,7 +5,7 @@
   <arg name="enable_object_insert" default="false"/>
   <arg name="op_logs_experiment_folder_name" default="carla"/>
   <arg name="kml_map_path" default=""/>
-  <arg name="wheel_base" default="2.7"/>
+  <arg name="wheel_base" default="0.32"/>
 
   <include file="$(find autoware_launch)/hdmap_loader.launch"/>
 
