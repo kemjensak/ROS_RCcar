@@ -1,0 +1,21 @@
+<!-- -->
+<launch>
+  <arg name='host' default='localhost'/>
+  <arg name='port' default='2000'/>
+  <arg name='town' default='Town01'/>
+  <arg name='role_name' default='zati'/>
+  <!-- use comma separated format "x,y,z,roll,pitch,yaw" -->
+  <arg name="spawn_point" default="325,195.3,0,0,0,180"/>
+  <arg name="enable_openplanner_simulation" default="false"/>
+  <arg name="enable_object_insert" default="false"/>
+  <arg name="kml_map_path" default="/home/irol/carla_simulator/KmlMaps/Town01.kml"/>
+
+  <include file="$(env CARLA_AUTOWARE_ROOT)/autoware.launch">
+    <arg name='role_name' value='$(arg role_name)'/>
+    <arg name='enable_openplanner_simulation' value='$(arg enable_openplanner_simulation)'/>
+    <arg name='enable_object_insert' value='$(arg enable_object_insert)'/>
+    <arg name='kml_map_path' value='$(arg kml_map_path)'/>
+  </include>
+
+</launch>
+
