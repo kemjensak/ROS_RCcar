@@ -26,8 +26,8 @@ x = vx = y = vy = th = vth = steer_rad = 0.0
 currnet_tacho = last_tacho = tacho_err = 0
 tacho_jitter_threshold = 10
 last_time = currnet_time = 0.0
-steer_offset = -3.1
-rev_steer_offset = 1.5
+steer_offset = -0
+rev_steer_offset = 0
 
 speed_cmd = 0
 steer_cmd = 0 + steer_offset
@@ -204,7 +204,6 @@ if __name__ == '__main__':
 
         
         
-
 
 
 

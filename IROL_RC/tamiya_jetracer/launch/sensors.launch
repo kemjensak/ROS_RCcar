@@ -11,7 +11,7 @@
       <rosparam command="load" file="$(find tamiya_jetracer)/param/xsens_mti_node.yaml" />
   </node>
 
-  <node pkg="tamiya_jetracer" name="vesc_node" type="vesc_controller.py" output="screen"> </node>
+  <node pkg="tamiya_jetracer" name="vesc_node" type="vesc_controller_auto.py" output="screen"> </node>
   <node pkg="tamiya_jetracer" name="odom_publisher" type="odom_publisher" output="screen"> </node>
   <include file="$(find teleop_twist_joy)/launch/teleop.launch"/>
 
