@@ -16,9 +16,9 @@
   <include file="$(find teleop_twist_joy)/launch/teleop.launch"/>
 
 
-  <node name="vesc_odom_publisher" pkg="tamiya_jetracer" type="odom_publisher" output="screen">
-    
-  </node>
+  <node name="vesc_odom_publisher" pkg="tamiya_jetracer" type="odom_publisher" output="screen"> </node>
+  <node pkg="tamiya_jetracer" name="pose_transformer" type="pose_transformer.py" output="screen"> </node>
+
 
   <node pkg="tf" type="static_transform_publisher" name="base_to_laser_broadcaster" args="0.25 0 0.155 3.14 0 0 base_link laser 10"/>
   <node pkg="tf" type="static_transform_publisher" name="base_to_imu_broadcaster" args="0.17 0 0.125 0 0 0 base_link imu_link 10"/>

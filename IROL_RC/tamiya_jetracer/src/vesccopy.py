@@ -2,13 +2,11 @@
 import rospy
 from pyvesc import VESC
 import time
-from std_msgs.msg import Int16
-from std_msgs.msg import Float32
-from geometry_msgs.msg import Twist
+from std_msgs.msg import Int16, Float32
+from geometry_msgs.msg import Twist, TwistStamped
 from sensor_msgs.msg import Joy
-from tamiya_jetracer.msg import vesc_cmd
-from tamiya_jetracer.msg import vesc_feedback
-from autoware_msgs.msg import VehicleCmd
+from tamiya_jetracer.msg import vesc_cmd, vesc_feedback
+from autoware_msgs.msg import VehicleCmd, VehicleStatus
 from math import *
 
 meter_per_pulse = 0.004716966
@@ -22,7 +20,6 @@ class RC_driver():
     def __init__(self):
         self.errCount = 0
         self.max_errCount = 5
-        # self.servo = 0.5  #jw
         self.serial_port = rospy.get_param('~serial_port','/dev/vesc')
         self.motor = VESC(serial_port=self.serial_port)
         try:
@@ -41,7 +38,7 @@ class RC_driver():
         self.rev_steer_offset = rospy.get_param('~rev_steer_offset',3.8)   
         self.meter_per_rotate = rospy.get_param('~meter_per_rotate',0.330)
         self.wheelbase = rospy.get_param('~wheelbase',0.320)
-        self.maxSteer = rospy.get_param('~maxSteer',0.45) # rad
+        self.maxSteer = rospy.get_param('~maxSteer',0.45)
         self.tacho_jitter_threshold = rospy.get_param('~tacho_jitter_threshold',20)
         self.tacho_err = 0
         self.controlMode = 1 #0:초기, 1:작동x, -1:수동
@@ -51,11 +48,12 @@ class RC_driver():
 
         self.feedback_msg = vesc_feedback()
         self.vehiclecmd = VehicleCmd()
+
         self.feedbackPublisher =  rospy.Publisher('/vesc_feedback', vesc_feedback, queue_size=1)
-        # self.servoPublisher = rospy.Publisher('/shout_servo', Float32, queue_size=1)    #jw
+        self.feedbackPublisher =  rospy.Publisher('/current_velocity', TwistStamped, queue_size=1)
         
         
-        rospy.Subscriber("/cmd_vel",Twist ,self.cmd_velCallback) # auto
+        rospy.Subscriber("/cmd_vel",Twist ,self.cmd_velCallback)
         rospy.Subscriber('/vehicle_cmd', VehicleCmd, self.vehiclecmdCallback)
 
         rospy.Subscriber("/joy_cmd",Twist ,self.joy_cmdCallback)
@@ -92,28 +90,23 @@ class RC_driver():
         if 0.1 < lin_spd < 0.7:
             lin_spd = 0.7
         self.speed_cmd = lin_spd * speed_per_ms
-        
         if lin_spd != 0:
             self.steer_rad = atan(wheelbase / lin_spd * ang_spd)
         else:
-            # lin_spd = 0.5 #jw
-            # self.steer_rad = atan(wheelbase / lin_spd * ang_spd)  #jw
             self.steer_rad = 0
         if self.steer_rad >  self.maxSteer:
             self.steer_rad = self.maxSteer
         if self.steer_rad <  -self.maxSteer:
             self.steer_rad = -self.maxSteer
-        self.feedback_msg.steer.data = self.steer_rad
+        # self.feedback_msg.steer.data = self.steer_rad
         self.steer_cmd = degrees(self.steer_rad)
-        # self.servo = self.steer_cmd #jw
 
     def set_and_get_vesc(self, speed, steer):
         try:
-            # self.servoPublisher.publish(self.servo) #jw
             # rospy.sleep(0.01)
             if speed < 0:
-                self.motor.set_servo((50 - steer*1.8 - self.rev_steer_offset) / 100) # 1.8 -> servo/steer(deg)
-            else:
+                self.motor.set_servo((50 - steer*1.8 - self.rev_steer_offset) / 100)
+            else:    
                 self.motor.set_servo((50 - steer*1.8 + self.steer_offset) / 100)
             
             rospy.sleep(0.02)

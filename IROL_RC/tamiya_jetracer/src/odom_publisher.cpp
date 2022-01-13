@@ -11,6 +11,7 @@ namespace mobile_robot_odometry
     {
         sub = nh.subscribe("/vesc_feedback", 100, &MobileRobotOdomety::storeFeedback, this);
         odomPub = nh.advertise<nav_msgs::Odometry>("/vesc/odom",100);
+        velPub = nh.advertise<geometry_msgs::TwistStamped>("/current_velocity",100);
         base_link_id = "base_link";
         odom_link_id = "odom";
         // while((!private_nh.getParam("base_link_id", base_link_id))|(!private_nh.getParam("odom_link_id", odom_link_id))) ros::Duration(0.5).sleep();
@@ -48,6 +49,8 @@ namespace mobile_robot_odometry
 
     void MobileRobotOdomety::pubTF(){
         nav_msgs::Odometry odom;
+        geometry_msgs::TwistStamped vel;
+
         dt = (ros::Time::now() - last_time).toSec();
         delta_tacho = tacho - last_tacho;
         
@@ -58,6 +61,7 @@ namespace mobile_robot_odometry
         vy = v * sin(th);
         delta_x = v * dt * cos(th);
         delta_y = v * dt * sin(th);
+        // (changed) wrt map to base_link 
         // delta_x = (vx * cos(th) - vy * sin(th)) * dt;
         // delta_y = (vx * sin(th) + vy * cos(th)) * dt;
         delta_th = vth * dt;
@@ -80,7 +84,19 @@ namespace mobile_robot_odometry
         odom.twist.twist.angular.z  = vth;
         odom.twist.covariance = {0.03,0,0,0,0,0, 0,0.03,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0.5445};
 
+        vel.header.seq             = seq;
+        vel.header.stamp           = last_time;
+        vel.header.frame_id        = base_link_id;
+        vel.twist.linear.x         = vx;
+        vel.twist.linear.y         = vy;
+        vel.twist.linear.z         = 0;
+        vel.twist.angular.x        = 0;
+        vel.twist.angular.y        = 0;
+        vel.twist.angular.z        = vth;
+
+
         odomPub.publish(odom);
+        velPub.publish(vel);
         // boardcastTransform();
         last_time = ros::Time::now();
         last_tacho = tacho;

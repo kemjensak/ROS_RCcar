@@ -5,6 +5,7 @@
 #include<cmath>
 #include<gazebo_msgs/LinkStates.h>
 #include<geometry_msgs/Twist.h>
+#include<geometry_msgs/TwistStamped.h>
 #include<geometry_msgs/Pose.h>
 #include<vector>
 #include<iostream>
@@ -33,6 +34,7 @@ namespace mobile_robot_odometry
 
             ros::Subscriber sub;
             ros::Publisher odomPub;
+            ros::Publisher velPub;
 
             std::string base_link_id, odom_link_id, wheel_1_id, wheel_3_id;
             double separation_length;

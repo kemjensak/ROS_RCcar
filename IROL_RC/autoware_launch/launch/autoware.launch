@@ -4,47 +4,41 @@
   <arg name="enable_openplanner_simulation" default="false"/>
   <arg name="enable_object_insert" default="false"/>
   <arg name="op_logs_experiment_folder_name" default="carla"/>
-  <arg name="kml_map_path" default=""/>
+  <arg name="kml_map_path" default=""/><!-- set lanenet2 in op launch files. NOT kml! -->
   <arg name="wheel_base" default="0.32"/>
 
-  <include file="$(find autoware_launch)/hdmap_loader.launch"/>
+  <include file="$(find autoware_launch)/launch/hdmap_loader.launch"/>
 
-  <include file="$(find autoware_launch)/localization.launch">
+  <include file="$(find autoware_launch)/launch/localization.launch">
   	<arg name='role_name' value='$(arg role_name)'/>
   </include>
 
-  <include file="$(find autoware_launch)/vel_pose_connector.launch"/>
+  <include file="$(find autoware_launch)/launch/vel_pose_connector.launch"/>
 
-  <include file="$(find autoware_launch)/object_detection_tracking.launch">
+  <include file="$(find autoware_launch)/launch/object_detection_tracking.launch">
   	<arg name='role_name' value='$(arg role_name)'/>
   	<arg name='enable_openplanner_simulation' value='$(arg enable_openplanner_simulation)'/>
   	<arg name='enable_object_insert' value='$(arg enable_object_insert)'/>
   </include>
 
-  <include file="$(find autoware_launch)/op_global_planner.launch"> 
+  <include file="$(find autoware_launch)/launch/op_global_planner.launch"> 
 	  <arg name="op_logs_experiment_folder_name" value='$(arg op_logs_experiment_folder_name)'/>
 	  <arg name="kml_map_path" value='$(arg kml_map_path)'/>
   </include>
 
-  <include file="$(find autoware_launch)/op_common_params.launch">  
+  <include file="$(find autoware_launch)/launch/op_common_params.launch">  
 	  <arg name="op_logs_experiment_folder_name" value='$(arg op_logs_experiment_folder_name)'/>
 	  <arg name="kml_map_path" value='$(arg kml_map_path)'/>
   </include>
 
-  <include file="$(find autoware_launch)/op_local_planner.launch">  
+  <include file="$(find autoware_launch)/launch/op_local_planner.launch">  
   	<arg name='enable_openplanner_simulation' value='$(arg enable_openplanner_simulation)'/>
   	<arg name='enable_object_insert' value='$(arg enable_object_insert)'/>
 	<arg name="kml_map_path" value='$(arg kml_map_path)'/>
   </include>
 
-  <include file="$(find autoware_launch)/traffic_light_detector.launch">  
-  	<arg name='role_name' value='$(arg role_name)'/>
-  </include> 
-
-  <include file="$(find autoware_launch)/pure_pursuit_controller.launch">  
+  <include file="$(find autoware_launch)/launch/pure_pursuit_controller.launch">  
   	<arg name='wheel_base' value='$(arg wheel_base)'/>
   </include> 
-
-  <include file="$(find autoware_launch)/high_level_controller_direct.launch"/> 
 
 </launch>

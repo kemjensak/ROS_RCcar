@@ -8,26 +8,26 @@
     @todo: still required?
   -->
 <include file="$(find op_local_planner)/launch/op_common_params.launch">
-	<arg name="mapSource" 			default="2" /> <!-- Autoware=0, Vector Map Folder=1, kml=2 -->
+	<arg name="mapSource" 			default="3" /> <!-- Autoware=0, Vector Map Folder=1, kml=2, lanelet2 file=3, kml map file path from runtime manager = 4, OpenDRIVE file = 6 -->
 	<arg name="mapFileName" 		value='$(arg kml_map_path)' />
 		
-	<arg name="pathDensity" 		default="0.5" />
-	<arg name="rollOutDensity" 		default="0.5" />
-	<arg name="rollOutsNumber" 		default="2"    />
+	<arg name="pathDensity" 		default="0.2" />
+	<arg name="rollOutDensity" 		default="0.15" />
+	<arg name="rollOutsNumber" 		default="7"    />
 
-	<arg name="maxLocalPlanDistance" 	default="100" />	
-	<arg name="horizonDistance" 		default="120"  />
+	<arg name="maxLocalPlanDistance" 	default="20" />	
+	<arg name="horizonDistance" 		default="25"  />
 	
-	<arg name="minFollowingDistance" 	default="80.0"  /> <!-- should be bigger than Distance to follow -->	
-	<arg name="minDistanceToAvoid" 		default="50.0" /> <!-- should be smaller than minFollowingDistance and larger than maxDistanceToAvoid -->
-	<arg name="maxDistanceToAvoid" 		default="6.0"  /> <!-- should be smaller than minDistanceToAvoid -->
+	<arg name="minFollowingDistance" 	default="3.0"  /> <!-- should be bigger than Distance to follow -->	
+	<arg name="minDistanceToAvoid" 		default="1.5" /> <!-- should be smaller than minFollowingDistance and larger than maxDistanceToAvoid -->
+	<arg name="maxDistanceToAvoid" 		default="0.5"  /> <!-- should be smaller than minDistanceToAvoid -->
 	<arg name="speedProfileFactor"		default="1.0"  />
 	
 	<arg name="smoothingDataWeight"		default="0.45"  />
 	<arg name="smoothingSmoothWeight"	default="0.4"  />	
 	
-	<arg name="horizontalSafetyDistance"	default="0.4"  />
-	<arg name="verticalSafetyDistance"	default="0.5"  />
+	<arg name="horizontalSafetyDistance"	default="0.3"  />
+	<arg name="verticalSafetyDistance"	default="0.4"  />
 	
 	<arg name="enableSwerving" 		default="false"  />
 	<arg name="enableFollowing" 		default="true" />	
@@ -36,19 +36,19 @@
 	<arg name="enableLaneChange" 		default="false" />	
 	
 	<!-- Vehicle Info, shared with controller and simulation -->
-	<arg name="height" 			default="1.47"  />
-	<arg name="front_length"		default="1.0"  />
-	<arg name="back_length"			default="0.6"  />
-	<arg name="width" 			default="1.85"  />
-	<arg name="length" 			default="4.2"  />
-	<arg name="wheelBaseLength" 		default="2.7"  />
-	<arg name="turningRadius"		default="5.2"  />
+	<arg name="height" 			default="0.2"  />
+	<arg name="front_length"		default="0.1"  />
+	<arg name="back_length"			default="0.1"  />
+	<arg name="width" 			default="0.3"  />
+	<arg name="length" 			default="0.6"  />
+	<arg name="wheelBaseLength" 		default="0.32"  />
+	<arg name="turningRadius"		default="3.2"  />
 	<arg name="maxWheelAngle" 		default="0.85" />
-	<arg name="steeringDelay" 		default="0.5" />
-	<arg name="minPursuiteDistance" 	default="5.0" />
-	<arg name="maxVelocity" 		default="12.0" />
-	<arg name="minVelocity" 		default="0.0" />
-	<arg name="maxAcceleration" 		default="2" />
+	<arg name="steeringDelay" 		default="0.1" />
+	<arg name="minPursuiteDistance" 	default="0.7" />
+	<arg name="maxVelocity" 		default="10.0" />
+	<arg name="minVelocity" 		default="0.8" />
+	<arg name="maxAcceleration" 		default="1" />
 	<arg name="maxDeceleration" 		default="-2" />
 	<!-- Internal ACC parameters -->
 	<arg name="use_internal_acc" 		default="true" />
