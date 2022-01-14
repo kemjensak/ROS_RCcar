@@ -2,10 +2,7 @@
   <arg name="joy_config" default="ps3" />
   <arg name="joy_dev" default="/dev/input/js0" />
   <arg name="config_filepath" default="$(find teleop_twist_joy)/config/$(arg joy_config).config.yaml" />
-  <!-- <arg name = "model" default = "$(find tamiya_description)/urdf/tamiya.urdf" /> -->
   <arg name="load_map_file_path" default="$(find tamiya_jetracer)/maps/mymap.yaml"/>
-
-  <rosparam command="load" file="$(find tamiya_jetracer)/cfg/mobile_robot_odometry.yaml" />
   
   <include file="$(find rplidar_ros)/launch/rplidar.launch">
     <param name="serial_port" value="/dev/rplidar"/>
@@ -15,10 +12,14 @@
       <rosparam command="load" file="$(find tamiya_jetracer)/param/xsens_mti_node.yaml" />
   </node>
 
-  <node pkg="tamiya_jetracer" name="vesc_node" type="vesc_controller.py" output="screen"> </node>
+  <node pkg="tamiya_jetracer" name="vesc_node" type="vesc_controller_auto.py" output="screen"> </node>
   <node pkg="tamiya_jetracer" name="odom_publisher" type="odom_publisher" output="screen"> </node>
-
   <include file="$(find teleop_twist_joy)/launch/teleop.launch"/>
+
+
+  <node name="vesc_odom_publisher" pkg="tamiya_jetracer" type="odom_publisher" output="screen"> </node>
+  <node pkg="tamiya_jetracer" name="pose_transformer" type="pose_transformer.py" output="screen"> </node>
+
 
   <node pkg="tf" type="static_transform_publisher" name="base_to_laser_broadcaster" args="0.25 0 0.155 3.14 0 0 base_link laser 10"/>
   <node pkg="tf" type="static_transform_publisher" name="base_to_imu_broadcaster" args="0.17 0 0.125 0 0 0 base_link imu_link 10"/>
@@ -26,10 +27,10 @@
   <node pkg="robot_localization" type="ukf_localization_node" name="ukf_se" clear_params="true">
     <rosparam command="load" file="$(find tamiya_jetracer)/param/ukf_template.yaml" />
 
-     <!-- Placeholder for output topic remapping -->
-    <!-- <remap from="odometry/filtered" to="/odom"/> -->
-    <!-- <remap from="accel/filtered" to=""/> -->
-   
+    <!--  Placeholder for output topic remapping
+    <remap from="odometry/filtered" to=""/>
+    <remap from="accel/filtered" to=""/>
+    -->
 
   </node>
 

@@ -22,7 +22,6 @@ class RC_driver():
     def __init__(self):
         self.errCount = 0
         self.max_errCount = 5
-        # self.servo = 0.5  #jw
         self.serial_port = rospy.get_param('~serial_port','/dev/vesc')
         self.motor = VESC(serial_port=self.serial_port)
         try:
@@ -37,7 +36,7 @@ class RC_driver():
         rospy.loginfo("VESC connection succeeded! loaded last tacho %d" % self.init_tacho)
         
         self.meter_per_rotate = rospy.get_param('~meter_per_rotate',0.330)
-        self.steer_offset = rospy.get_param('~steer_offset', -4.5)     
+        self.steer_offset = rospy.get_param('~steer_offset', 4.5)     
         self.rev_steer_offset = rospy.get_param('~rev_steer_offset',3.8)   
         self.meter_per_rotate = rospy.get_param('~meter_per_rotate',0.330)
         self.wheelbase = rospy.get_param('~wheelbase',0.320)
@@ -52,7 +51,6 @@ class RC_driver():
         self.feedback_msg = vesc_feedback()
         self.vehiclecmd = VehicleCmd()
         self.feedbackPublisher =  rospy.Publisher('/vesc_feedback', vesc_feedback, queue_size=1)
-        # self.servoPublisher = rospy.Publisher('/shout_servo', Float32, queue_size=1)    #jw
         
         
         rospy.Subscriber("/cmd_vel",Twist ,self.cmd_velCallback) # auto
@@ -96,8 +94,6 @@ class RC_driver():
         if lin_spd != 0:
             self.steer_rad = atan(wheelbase / lin_spd * ang_spd)
         else:
-            # lin_spd = 0.5 #jw
-            # self.steer_rad = atan(wheelbase / lin_spd * ang_spd)  #jw
             self.steer_rad = 0
         if self.steer_rad >  self.maxSteer:
             self.steer_rad = self.maxSteer
@@ -105,16 +101,16 @@ class RC_driver():
             self.steer_rad = -self.maxSteer
         self.feedback_msg.steer.data = self.steer_rad
         self.steer_cmd = degrees(self.steer_rad)
-        # self.servo = self.steer_cmd #jw
 
     def set_and_get_vesc(self, speed, steer):
         try:
-            # self.servoPublisher.publish(self.servo) #jw
             # rospy.sleep(0.01)
             if speed < 0:
                 self.motor.set_servo((50 - steer*1.8 - self.rev_steer_offset) / 100) # 1.8 -> servo/steer(deg)
+                # self.motor.set_servo((((self.rev_steer_offset - 27.6) / 30) * steer + (50 - self.rev_steer_offset)) / 100)
             else:
                 self.motor.set_servo((50 - steer*1.8 + self.steer_offset) / 100)
+                # self.motor.set_servo((((self.steer_offset - 27.6) / 30) * steer + (50 - self.rev_steer_offset)) / 100)
             
             rospy.sleep(0.02)
             self.motor.set_rpm(int(speed*100))
@@ -168,12 +164,6 @@ if __name__ == '__main__':
         # rospy.loginfo(self.steer_rad)
         # rospy.loginfo(self.steer_cmd)
         driver.feedbackPublisher.publish(driver.feedback_msg)
-        # print(ms_per_speed * 9)
-        # print(current_tacho,type(currnet_tacho))
-        # print(msg.tacho.data)
-        # print(ms_per_speed)
-        # print(encoder)
-        
         rate.sleep()
     
     driver.motor.set_rpm(0)
