@@ -3,21 +3,20 @@
   <arg name='role_name' default='ego_vehicle'/>
   <arg name="enable_openplanner_simulation" default="false"/>
   <arg name="enable_object_insert" default="false"/>
-  <arg name="op_logs_experiment_folder_name" default="carla"/>
   <arg name="kml_map_path" default="/home/irol/catkin_ws/hallway_bothway_exteneded.osm"/><!-- set lanenet2 in op launch files. NOT kml! -->
-  <arg name="wheel_base" default="0.32"/>
+  <arg name="wheel_base" default="0.32"/> <!-- for DEMO(Traxxas slash platinum) -->
 
   <include file="$(find autoware_launch)/launch/hdmap_loader.launch"/>
 
-  <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0 0 0 0 world map 100" />
+  
 
-  <include file="$(find autoware_launch)/launch/vel_pose_connector.launch"/>
+  <!--include file="$(find autoware_launch)/launch/vel_pose_connector.launch"/-->
 
-  <include file="$(find autoware_launch)/launch/object_detection_tracking.launch">
+  <!--include file="$(find autoware_launch)/launch/object_detection_tracking.launch">
   	<arg name='role_name' value='$(arg role_name)'/>
   	<arg name='enable_openplanner_simulation' value='$(arg enable_openplanner_simulation)'/>
   	<arg name='enable_object_insert' value='$(arg enable_object_insert)'/>
-  </include>
+  </include-->
 
   <include file="$(find autoware_launch)/launch/op_global_planner.launch"> 
 	  <arg name="op_logs_experiment_folder_name" value='$(arg op_logs_experiment_folder_name)'/>

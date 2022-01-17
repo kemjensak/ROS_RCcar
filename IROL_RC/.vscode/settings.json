@@ -1,0 +1,26 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/irol/autoware.ai.openplanner/install/vector_map_server/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/vector_map_msgs/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/tablet_socket_msgs/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/sick_ldmrs_driver/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/sick_ldmrs_msgs/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/points_downsampler/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/lgsvl_simulator_bridge/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/kitti_player/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/javad_navsat_driver/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/ds4_msgs/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/custom_msgs/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/carla_autoware_bridge/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/autoware_system_msgs/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/autoware_camera_lidar_calibrator/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/autoware_msgs/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/autoware_map_msgs/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/autoware_launcher/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/autoware_lanelet2_msgs/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/autoware_config_msgs/lib/python2.7/dist-packages",
+        "/home/irol/autoware.ai.openplanner/install/autoware_can_msgs/lib/python2.7/dist-packages",
+        "/home/irol/catkin_ws/devel/lib/python2.7/dist-packages",
+        "/opt/ros/melodic/lib/python2.7/dist-packages"
+    ]
+}

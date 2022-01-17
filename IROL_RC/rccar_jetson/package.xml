@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>tamiya_jetracer</name>
+  <name>rccar_jetson</name>
   <version>0.0.0</version>
-  <description>The tamiya_jetracer package</description>
+  <description>Autonomous vehicle platform for educational purposes</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="irol@todo.todo">irol</maintainer>
+  <maintainer email="kemjensak@gmail.com">Jinseok Kim</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
