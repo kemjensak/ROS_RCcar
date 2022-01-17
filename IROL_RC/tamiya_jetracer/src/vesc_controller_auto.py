@@ -43,7 +43,7 @@ class RC_driver():
         self.maxSteer = rospy.get_param('~maxSteer',0.45) # rad
         self.tacho_jitter_threshold = rospy.get_param('~tacho_jitter_threshold',20)
         self.tacho_err = 0
-        self.controlMode = 1 #0:초기, 1:작동x, -1:수동
+        self.manualMode = 1 #0:초기, 1:작동x, -1:수동
         self.steer_rad = 0.0
         self.speed_cmd = 0
         self.steer_cmd = 0 + self.steer_offset
@@ -64,12 +64,12 @@ class RC_driver():
 
     def joyCallback(self, data):
         if data.axes[3] != 1:
-            self.controlMode = 1
+            self.manualMode = 1
         else:
-            self.controlMode = 0
+            self.manualMode = 0
 
     def vehiclecmdCallback(self, data):
-        if self.controlMode == 1:
+        if self.manualMode == 1:
             return
         lin_cmd = data.ctrl_cmd.linear_velocity
         ang_cmd = data.ctrl_cmd.steering_angle
@@ -77,12 +77,12 @@ class RC_driver():
         self.steer_cmd = degrees(ang_cmd)
 
     def joy_cmdCallback(self, data):
-        if self.controlMode != 1:
+        if self.manualMode != 1:
             return
         self.cal_cmd(data.linear.x, data.angular.z)
     
     def cmd_velCallback(self, data):
-        if self.controlMode == 1:
+        if self.manualMode == 1:
             return
         self.cal_cmd(data.linear.x, data.angular.z)
         
@@ -106,11 +106,11 @@ class RC_driver():
         try:
             # rospy.sleep(0.01)
             if speed < 0:
-                self.motor.set_servo((50 - steer*1.8 - self.rev_steer_offset) / 100) # 1.8 -> servo/steer(deg)
-                # self.motor.set_servo((((self.rev_steer_offset - 27.6) / 30) * steer + (50 - self.rev_steer_offset)) / 100)
+                # self.motor.set_servo((50 - steer*1.8 - self.rev_steer_offset) / 100) # 1.8 -> servo/steer(deg)
+                self.motor.set_servo((((self.rev_steer_offset - 27.6) / 30) * steer + (50 - self.rev_steer_offset)) / 100)
             else:
-                self.motor.set_servo((50 - steer*1.8 + self.steer_offset) / 100)
-                # self.motor.set_servo((((self.steer_offset - 27.6) / 30) * steer + (50 - self.rev_steer_offset)) / 100)
+                # self.motor.set_servo((50 - steer*1.8 + self.steer_offset) / 100)
+                self.motor.set_servo((((self.steer_offset - 27.6) / 30) * steer + (50 - self.rev_steer_offset)) / 100)
             
             rospy.sleep(0.02)
             self.motor.set_rpm(int(speed*100))

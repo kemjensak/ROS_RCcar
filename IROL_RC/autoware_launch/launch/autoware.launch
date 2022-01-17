@@ -4,14 +4,12 @@
   <arg name="enable_openplanner_simulation" default="false"/>
   <arg name="enable_object_insert" default="false"/>
   <arg name="op_logs_experiment_folder_name" default="carla"/>
-  <arg name="kml_map_path" default=""/><!-- set lanenet2 in op launch files. NOT kml! -->
+  <arg name="kml_map_path" default="/home/irol/catkin_ws/hallway_bothway_exteneded.osm"/><!-- set lanenet2 in op launch files. NOT kml! -->
   <arg name="wheel_base" default="0.32"/>
 
   <include file="$(find autoware_launch)/launch/hdmap_loader.launch"/>
 
-  <include file="$(find autoware_launch)/launch/localization.launch">
-  	<arg name='role_name' value='$(arg role_name)'/>
-  </include>
+  <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0 0 0 0 world map 100" />
 
   <include file="$(find autoware_launch)/launch/vel_pose_connector.launch"/>
 
