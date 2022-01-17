@@ -11,7 +11,7 @@ from tamiya_jetracer.msg import vesc_feedback
 from autoware_msgs.msg import VehicleCmd
 from math import *
 
-meter_per_pulse = 0.004716966
+
 meter_per_rotate = 0.330
 wheel_rpm_per_speed = 99.4213/9
 ms_per_speed = (meter_per_rotate * wheel_rpm_per_speed) / 60
@@ -35,10 +35,8 @@ class RC_driver():
         self.errCount = 0
         rospy.loginfo("VESC connection succeeded! loaded last tacho %d" % self.init_tacho)
         
-        self.meter_per_rotate = rospy.get_param('~meter_per_rotate',0.330)
         self.steer_offset = rospy.get_param('~steer_offset', 4.5)     
         self.rev_steer_offset = rospy.get_param('~rev_steer_offset',3.8)   
-        self.meter_per_rotate = rospy.get_param('~meter_per_rotate',0.330)
         self.wheelbase = rospy.get_param('~wheelbase',0.320)
         self.maxSteer = rospy.get_param('~maxSteer',0.45) # rad
         self.tacho_jitter_threshold = rospy.get_param('~tacho_jitter_threshold',20)
