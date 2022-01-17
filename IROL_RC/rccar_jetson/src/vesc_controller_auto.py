@@ -47,8 +47,8 @@ class RC_driver():
 
         self.feedback_msg = vesc_feedback()
         self.vehiclecmd = VehicleCmd()
-        self.feedbackPublisher =  rospy.Publisher('/vesc_feedback', vesc_feedback, queue_size=1)
         
+        self.feedbackPublisher =  rospy.Publisher('/vesc_feedback', vesc_feedback, queue_size=1)
         
         rospy.Subscriber("/cmd_vel",Twist ,self.cmd_velCallback) # auto
         rospy.Subscriber('/vehicle_cmd', VehicleCmd, self.vehiclecmdCallback)

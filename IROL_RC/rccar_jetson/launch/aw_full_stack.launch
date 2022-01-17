@@ -3,7 +3,7 @@
 
   <include file="$(find rccar_jetson)/launch/bringup.launch"/>
 
-    <!-- Run the map server -->
+    <!-- map server -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg load_map_file_path)" >
     <param name="frame_id" value="map"/>
   </node>
@@ -50,6 +50,8 @@
     <param name="initial_pose_y" value="0.0"/>
     <param name="initial_pose_a" value="-1.57"/>
   </node>
+
+  <include file="$(find autoware_launch)/launch/autoware.launch"/>
   
   <node name="rviz" pkg="rviz" type="rviz"/>
 
