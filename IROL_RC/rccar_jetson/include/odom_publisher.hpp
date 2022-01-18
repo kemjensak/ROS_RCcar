@@ -12,7 +12,7 @@
 #include <string>
 #include <sensor_msgs/JointState.h>
 #include <std_msgs/Int32.h>
-#include <tamiya_jetracer/vesc_feedback.h>
+#include <rccar_jetson/vesc_feedback.h>
 
 namespace mobile_robot_odometry
 {
@@ -22,7 +22,7 @@ namespace mobile_robot_odometry
             MobileRobotOdomety();
             ~MobileRobotOdomety();
 
-            void storeFeedback(const tamiya_jetracer::vesc_feedback::ConstPtr &ptr);
+            void storeFeedback(const rccar_jetson::vesc_feedback::ConstPtr &ptr);
             //void calcWheelVelocityGazeboCB(const gazebo_msgs::LinkStates::ConstPtr& ptr);
 
             void boardcastTransform();

@@ -1,4 +1,4 @@
-image: /home/irol/catkin_ws/src/ROS_RCcar/IROL_RC/tamiya_jetracer/maps/mymap.pgm
+image: mymap.pgm
 resolution: 0.050000
 origin: [-51.224998, -51.224998, 0.000000]
 negate: 0

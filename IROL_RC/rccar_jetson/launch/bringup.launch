@@ -1,14 +1,20 @@
 <launch> 
   
-  <include file="$(find rplidar_ros)/launch/rplidar.launch">
-    <param name="serial_port" value="/dev/rplidar"/>
-  </include>
+  <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+    <param name="serial_port"         type="string" value="/dev/rplidar"/>
+    <param name="serial_baudrate"     type="int"    value="115200"/><!--A1/A2 -->
+    <!--param name="serial_baudrate"     type="int"    value="256000"--><!--A3 -->
+    <param name="frame_id"            type="string" value="laser"/>
+    <param name="inverted"            type="bool"   value="false"/>
+    <param name="angle_compensate"    type="bool"   value="true"/>
+  </node>
   
   <node name="xsens_mti_node" pkg="xsens_mti_driver" type="xsens_mti_node" output="screen">
       <rosparam command="load" file="$(find rccar_jetson)/param/xsens_mti_node.yaml" />
   </node>
 
-  <node pkg="rccar_jetson" name="vesc_node" type="vesc_controller_auto.py" output="screen"> </node>
+  <node pkg="rccar_jetson" name="scan2cloud" type="scan2cloud.py" output="screen"> </node>  
+  <node pkg="rccar_jetson" name="vesc_driver" type="vesc_controller_auto.py" output="screen"> </node>
   <node pkg="rccar_jetson" name="odom_publisher" type="odom_publisher" output="screen"> </node>
   
   <include file="$(find teleop_twist_joy)/launch/teleop.launch">

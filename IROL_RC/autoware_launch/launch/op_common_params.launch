@@ -12,24 +12,24 @@
 	<arg name="mapFileName" 		value='$(arg kml_map_path)' />
 		
 	<arg name="pathDensity" 		default="0.2" />
-	<arg name="rollOutDensity" 		default="0.15" />
+	<arg name="rollOutDensity" 		default="0.2" />
 	<arg name="rollOutsNumber" 		default="7"    />
 
-	<arg name="maxLocalPlanDistance" 	default="20" />	
-	<arg name="horizonDistance" 		default="25"  />
+	<arg name="maxLocalPlanDistance" 	default="15" />	
+	<arg name="horizonDistance" 		default="20"  />
 	
-	<arg name="minFollowingDistance" 	default="3.0"  /> <!-- should be bigger than Distance to follow -->	
-	<arg name="minDistanceToAvoid" 		default="1.5" /> <!-- should be smaller than minFollowingDistance and larger than maxDistanceToAvoid -->
-	<arg name="maxDistanceToAvoid" 		default="0.5"  /> <!-- should be smaller than minDistanceToAvoid -->
+	<arg name="minFollowingDistance" 	default="1.0"  /> <!-- should be bigger than Distance to follow -->	
+	<arg name="minDistanceToAvoid" 		default="0.2" /> <!-- should be smaller than minFollowingDistance and larger than maxDistanceToAvoid -->
+	<arg name="maxDistanceToAvoid" 		default="0.15"  /> <!-- should be smaller than minDistanceToAvoid -->
 	<arg name="speedProfileFactor"		default="1.0"  />
 	
 	<arg name="smoothingDataWeight"		default="0.45"  />
 	<arg name="smoothingSmoothWeight"	default="0.4"  />	
 	
-	<arg name="horizontalSafetyDistance"	default="0.3"  />
+	<arg name="horizontalSafetyDistance"	default="0.1"  />
 	<arg name="verticalSafetyDistance"	default="0.4"  />
 	
-	<arg name="enableSwerving" 		default="false"  />
+	<arg name="enableSwerving" 		default="true"  />
 	<arg name="enableFollowing" 		default="true" />	
 	<arg name="enableTrafficLightBehavior"  default="false" />
 	<arg name="enableStopSignBehavior" 	default="false" />	
@@ -57,10 +57,10 @@
 	<arg name="curveSlowDownRatio" 		default="3.0" />	
 	<!-- ................................................... -->
 
-	<arg name="additionalBrakingDistance"   default="2.0" />	
+	<arg name="additionalBrakingDistance"   default="0.10" />	
 	<arg name="giveUpDistance" 		default="0.0"  />
 			
-	<arg name="velocitySource"		default="3" /> <!-- read velocities from (0- Odometry, 1- autoware current_velocities, 2- car_info 3- vehicle status) -->
+	<arg name="velocitySource"		default="1" /> <!-- read velocities from (0- Odometry, 1- autoware current_velocities, 2- car_info 3- vehicle status) -->
 	<arg name="vel_odom_topic"		default="/carla/zati/odometry" />
 	<arg name="vel_curr_topic"		default="/current_velocity" />
 	<arg name="vel_can_topic"		default="/can_info" />

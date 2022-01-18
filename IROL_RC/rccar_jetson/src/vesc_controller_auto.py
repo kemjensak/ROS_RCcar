@@ -6,8 +6,8 @@ from std_msgs.msg import Int16
 from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
-from tamiya_jetracer.msg import vesc_cmd
-from tamiya_jetracer.msg import vesc_feedback
+from rccar_jetson.msg import vesc_cmd
+from rccar_jetson.msg import vesc_feedback
 from autoware_msgs.msg import VehicleCmd
 from math import *
 
@@ -47,7 +47,7 @@ class RC_driver():
 
         self.feedback_msg = vesc_feedback()
         self.vehiclecmd = VehicleCmd()
-        
+
         self.feedbackPublisher =  rospy.Publisher('/vesc_feedback', vesc_feedback, queue_size=1)
         
         rospy.Subscriber("/cmd_vel",Twist ,self.cmd_velCallback) # auto

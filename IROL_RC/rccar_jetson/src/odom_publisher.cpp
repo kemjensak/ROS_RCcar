@@ -31,7 +31,7 @@ namespace mobile_robot_odometry
         
     }
 
-    void MobileRobotOdomety::storeFeedback(const tamiya_jetracer::vesc_feedback::ConstPtr &ptr){
+    void MobileRobotOdomety::storeFeedback(const rccar_jetson::vesc_feedback::ConstPtr &ptr){
         tacho = ptr->tacho.data;
         steer = ptr->steer.data;
     }
