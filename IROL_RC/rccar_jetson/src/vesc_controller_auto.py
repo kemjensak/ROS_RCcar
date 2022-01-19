@@ -1,13 +1,8 @@
 #!/usr/bin/env python3
 import rospy
 from pyvesc import VESC
-from pyvesc.protocol.interface import encode
-from pyvesc.VESC.messages import SetCurrentBrake
-from std_msgs.msg import Int16
-from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
-from rccar_jetson.msg import vesc_cmd
 from rccar_jetson.msg import vesc_feedback
 from autoware_msgs.msg import VehicleCmd
 from math import *
@@ -43,10 +38,9 @@ class RC_driver():
         self.tacho_jitter_threshold = rospy.get_param('~tacho_jitter_threshold',20)
         self.tacho_err = 0
         self.autoMode = 0 #0:초기, 1:작동x, -1:수동
+        self.lastMode = 0
         self.steer_rad = 0.0
         self.speed_cmd = 0
-        self.brake_cmd = 0
-        self.maxBrakeAmp = 40
         self.steer_cmd = 0 + self.steer_offset
 
         self.feedback_msg = vesc_feedback()
@@ -60,7 +54,7 @@ class RC_driver():
         rospy.Subscriber("/joy_cmd",Twist ,self.joy_cmdCallback)
         rospy.Subscriber("/joy",Joy ,self.joyCallback)
     
-        self.set_and_get_vesc(0, 50, 0)
+        self.set_and_get_vesc(0, 50)
         rospy.sleep(0.05)
 
     def connectVESC(self):
@@ -76,14 +70,17 @@ class RC_driver():
 
     def joyCallback(self, data):
         if data.axes[3] == -1.0:
+            if self.lastMode == 0:
+                self.speed_cmd = 0
+                self.steer_cmd = 0
             self.autoMode = 1
+            self.lastMode = 1
         else:
+            if self.lastMode == 1:
+                self.speed_cmd = 0
+                self.steer_cmd = 0
             self.autoMode = 0
-
-        if data.axes[4] < 0:
-            self.brake_cmd = -data.axes[4] * self.maxBrakeAmp
-        else:
-            self.brake_cmd = 0
+            self.lastMode = 0
 
     def vehiclecmdCallback(self, data):
         if self.autoMode == 0:
@@ -94,9 +91,11 @@ class RC_driver():
         self.steer_cmd = degrees(ang_cmd)
 
     def joy_cmdCallback(self, data):
+        self.manualCmdLinear = data.linear.x
+        self.manualCmdAngular = data.angular.z
         if self.autoMode == 1:
             return
-        self.cal_cmd(data.linear.x, data.angular.z)
+        self.cal_cmd(self.manualCmdLinear, self.manualCmdAngular)
     
     def cmd_velCallback(self, data):
         if self.autoMode == 0:
@@ -119,15 +118,9 @@ class RC_driver():
         self.feedback_msg.steer.data = self.steer_rad
         self.steer_cmd = degrees(self.steer_rad)
 
-    def set_and_get_vesc(self, speed, steer, brake):
+    def set_and_get_vesc(self, speed, steer):
         try:
-            # rospy.sleep(0.01)
-            if brake != 0:
-                speed = 0
-                steer = 0
-                self.motor.serial_port.write(encode(SetCurrentBrake(int(1000*self.brake_cmd))))
-                rospy.sleep(0.02)
-            elif speed < 0:
+            if speed < 0:
                 self.motor.set_servo((50 - steer*1.8 - self.rev_steer_offset) / 100) # 1.8 -> servo/steer(deg)
                 # self.motor.set_servo((((self.rev_steer_offset - 27.6) / 30) * steer + (50 - self.rev_steer_offset)) / 100) 잘못됨
             else:
@@ -151,7 +144,7 @@ class RC_driver():
             
         except Exception as e:
             self.handleException(e)
-            tacho = self.set_and_get_vesc(speed, steer, brake)
+            tacho = self.set_and_get_vesc(speed, steer)
 
         self.errCount = 0
         return tacho
@@ -170,7 +163,6 @@ class RC_driver():
             if self.motor.serial_port.is_open:
                 self.motor.serial_port.flush()
                 self.motor.serial_port.close()
-
             err;
 
 
@@ -186,7 +178,7 @@ if __name__ == '__main__':
         
         # current_tacho = set_and_get_vesc(8, self.steer_cmd, 10)
         
-        driver.feedback_msg.tacho.data = driver.set_and_get_vesc(driver.speed_cmd, driver.steer_cmd, driver.brake_cmd) - driver.init_tacho
+        driver.feedback_msg.tacho.data = driver.set_and_get_vesc(driver.speed_cmd, driver.steer_cmd) - driver.init_tacho
         rospy.loginfo(driver.feedback_msg.tacho.data)
         # rospy.loginfo(self.steer_rad)
         # rospy.loginfo(self.steer_cmd)
