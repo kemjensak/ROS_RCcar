@@ -9,7 +9,7 @@
     @todo: still required?
   -->
 <include file="$(find op_local_planner)/launch/op_trajectory_generator.launch">
-	<arg name="samplingTipMargin" 		default="0.9"  /> 
+	<arg name="samplingTipMargin" 		default="0.6"  /> 
 	<arg name="samplingOutMargin" 		default="1.3" /> 
 	<arg name="samplingSpeedFactor" 	default="1.0" />		
 	<arg name="enableHeadingSmoothing" 	default="true" />

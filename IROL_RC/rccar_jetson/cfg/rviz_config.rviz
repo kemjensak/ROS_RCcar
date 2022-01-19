@@ -6,6 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /MarkerArray7
+        - /MarkerArray7/Namespaces1
       Splitter Ratio: 0.5
     Tree Height: 571
   - Class: rviz/Selection
@@ -176,9 +178,9 @@ Visualization Manager:
       Marker Topic: /detection/contour_tracker/detected_polygons
       Name: MarkerArray
       Namespaces:
-        CenterMarker: true
+        CenterMarker: false
         Directions: true
-        InfoText: true
+        InfoText: false
         detected_polygons: true
         tracked_trajectories: true
       Queue Size: 100

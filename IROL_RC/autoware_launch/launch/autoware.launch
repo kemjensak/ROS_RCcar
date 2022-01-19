@@ -2,7 +2,7 @@
 <launch>
   <arg name="enable_openplanner_simulation" default="false"/>
   <arg name="enable_object_insert" default="false"/>
-  <arg name="kml_map_path" default="/home/irol/catkin_ws/hallway_bothway_exteneded.osm"/><!-- set lanenet2 in op launch files. NOT kml! -->
+  <arg name="kml_map_path" default="$(find rccar_jetson)/maps/hallway_bothway_extended.osm"/><!-- set lanenet2 in op launch files. NOT kml! -->
   <arg name="wheel_base" default="0.32"/> <!-- for DEMO(Traxxas slash platinum) -->
 
   

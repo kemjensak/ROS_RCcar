@@ -46,7 +46,7 @@
 	<arg name="maxWheelAngle" 		default="0.85" />
 	<arg name="steeringDelay" 		default="0.1" />
 	<arg name="minPursuiteDistance" 	default="0.7" />
-	<arg name="maxVelocity" 		default="10.0" />
+	<arg name="maxVelocity" 		default="3.0" />
 	<arg name="minVelocity" 		default="0.8" />
 	<arg name="maxAcceleration" 		default="1" />
 	<arg name="maxDeceleration" 		default="-2" />
