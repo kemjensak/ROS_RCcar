@@ -11,9 +11,9 @@
 	<arg name="mapSource" 			default="3" /> <!-- Autoware=0, Vector Map Folder=1, kml=2, lanelet2 file=3, kml map file path from runtime manager = 4, OpenDRIVE file = 6 -->
 	<arg name="mapFileName" 		value='$(arg kml_map_path)' />
 		
-	<arg name="pathDensity" 		default="0.2" />
-	<arg name="rollOutDensity" 		default="0.2" />
-	<arg name="rollOutsNumber" 		default="7"    />
+	<arg name="pathDensity" 		default="0.20" />
+	<arg name="rollOutDensity" 		default="0.15" />
+	<arg name="rollOutsNumber" 		default="8"    />
 
 	<arg name="maxLocalPlanDistance" 	default="15" />	
 	<arg name="horizonDistance" 		default="20"  />
@@ -21,7 +21,7 @@
 	<arg name="minFollowingDistance" 	default="1.0"  /> <!-- should be bigger than Distance to follow -->	
 	<arg name="minDistanceToAvoid" 		default="0.2" /> <!-- should be smaller than minFollowingDistance and larger than maxDistanceToAvoid -->
 	<arg name="maxDistanceToAvoid" 		default="0.15"  /> <!-- should be smaller than minDistanceToAvoid -->
-	<arg name="speedProfileFactor"		default="1.0"  />
+	<arg name="speedProfileFactor"		default="2.0"  />
 	
 	<arg name="smoothingDataWeight"		default="0.45"  />
 	<arg name="smoothingSmoothWeight"	default="0.4"  />	
@@ -30,7 +30,7 @@
 	<arg name="verticalSafetyDistance"	default="0.4"  />
 	
 	<arg name="enableSwerving" 		default="true"  />
-	<arg name="enableFollowing" 		default="true" />	
+	<arg name="enableFollowing" 		default="false" />	
 	<arg name="enableTrafficLightBehavior"  default="false" />
 	<arg name="enableStopSignBehavior" 	default="false" />	
 	<arg name="enableLaneChange" 		default="false" />	
@@ -46,10 +46,10 @@
 	<arg name="maxWheelAngle" 		default="0.85" />
 	<arg name="steeringDelay" 		default="0.1" />
 	<arg name="minPursuiteDistance" 	default="0.7" />
-	<arg name="maxVelocity" 		default="3.0" />
+	<arg name="maxVelocity" 		default="12.0" />
 	<arg name="minVelocity" 		default="0.8" />
-	<arg name="maxAcceleration" 		default="1" />
-	<arg name="maxDeceleration" 		default="-2" />
+	<arg name="maxAcceleration" 		default="4" />
+	<arg name="maxDeceleration" 		default="-5" />
 	<!-- Internal ACC parameters -->
 	<arg name="use_internal_acc" 		default="true" />
 	<arg name="accelerationPushRatio" 	default="5" />
@@ -57,7 +57,7 @@
 	<arg name="curveSlowDownRatio" 		default="3.0" />	
 	<!-- ................................................... -->
 
-	<arg name="additionalBrakingDistance"   default="0.10" />	
+	<arg name="additionalBrakingDistance"   default="0.20" />	
 	<arg name="giveUpDistance" 		default="0.0"  />
 			
 	<arg name="velocitySource"		default="1" /> <!-- read velocities from (0- Odometry, 1- autoware current_velocities, 2- car_info 3- vehicle status) -->

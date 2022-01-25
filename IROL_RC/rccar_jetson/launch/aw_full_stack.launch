@@ -1,6 +1,6 @@
 <launch> 
 
-  <arg name="osm_map_path" default="$(find rccar_jetson)/maps/hallway_bothway_exteneded.osm"/><!-- set lanenet2 in op launch files. NOT kml! -->
+  <arg name="osm_map_path" default="$(find rccar_jetson)/maps/hallway_normalized.osm"/><!-- set lanenet2 in op launch files. NOT kml! -->
   <arg name="grid_map_path" default="$(find rccar_jetson)/maps/mymap.yaml"/>
   
   <include file="$(find rccar_jetson)/launch/bringup.launch"/>

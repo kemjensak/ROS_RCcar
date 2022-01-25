@@ -35,9 +35,9 @@ class RC_driver():
         self.rev_steer_offset = rospy.get_param('~rev_steer_offset',3.8)   
         self.wheelbase = rospy.get_param('~wheelbase',0.320)
         self.maxSteer = rospy.get_param('~maxSteer',0.45) # rad
-        self.tacho_jitter_threshold = rospy.get_param('~tacho_jitter_threshold',20)
+        self.tacho_jitter_threshold = rospy.get_param('~tacho_jitter_threshold',60)
         self.tacho_err = 0
-        self.autoMode = 0 #0:초기, 1:작동x, -1:수동
+        self.autoMode = 0 #0
         self.lastMode = 0
         self.steer_rad = 0.0
         self.speed_cmd = 0

@@ -6,7 +6,7 @@
   <arg name="publishes_for_steering_robot" default="True"/>
   <arg name="add_virtual_end_waypoints" default="True"/>
   <arg name="const_lookahead_distance" default="4.0"/>
-  <arg name="const_velocity" default="5.0"/>
+  <arg name="const_velocity" default="30.0"/>
   <arg name="lookahead_ratio" default="2.0"/>
   <arg name="minimum_lookahead_distance" default="0.7"/>
   <arg name="wheel_base" default="0.32" />

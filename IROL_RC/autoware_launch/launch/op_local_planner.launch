@@ -9,10 +9,10 @@
     @todo: still required?
   -->
 <include file="$(find op_local_planner)/launch/op_trajectory_generator.launch">
-	<arg name="samplingTipMargin" 		default="0.6"  /> 
-	<arg name="samplingOutMargin" 		default="1.3" /> 
+	<arg name="samplingTipMargin" 		default="0.5"  /> 
+	<arg name="samplingOutMargin" 		default="1.0" /> 
 	<arg name="samplingSpeedFactor" 	default="1.0" />		
-	<arg name="enableHeadingSmoothing" 	default="true" />
+	<arg name="enableHeadingSmoothing" 	default="false" />
 	<arg name="startFromFrontAxel" 		default="false" />
 </include> 
 
@@ -72,73 +72,5 @@
 	<arg name="use_sim_time" 		default="false"/>	
 	<arg name="show_driving_path" 		default="false"/>
 </include> 
-
-
-<!-- 
-    # op_car_simulator #
-  -->
-<group if="$(arg enable_openplanner_simulation)">
-<group unless="$(arg enable_object_insert)">
-<include file="$(find op_simulation_package)/launch/op_car_simulator_1.launch" >
-  <arg name="id" 			default="1" />		
-  <arg name="enableRvizPoseSelect"	default="false"   />	
-  <arg name="enableLooper"		default="false"   />	
-  <arg name="meshPath" 			default="package://vehicle_description/mesh/default.dae" />
-  <arg name="baseColorR"		default="0.9" />
-  <arg name="baseColorG"		default="0.1" />
-  <arg name="baseColorB"		default="0.0" />
-  <arg name="logFolder" 		default="/home/hatem/SimuLogs/SimulatedCar1/" />
-	
-  <arg name="maxVelocity" 		default="3" />
-  <arg name="minVelocity" 		default="0.0" />	
-  <arg name="maxLocalPlanDistance" 	default="50" />
-  <arg name="samplingTipMargin" 	default="5"  /> 
-  <arg name="samplingOutMargin" 	default="15" /> 
-  <arg name="samplingSpeedFactor" 	default="0.25" />
-  <arg name="enableHeadingSmoothing" 	default="false" />
-  <arg name="pathDensity" 	default="0.5" />
-  <arg name="rollOutDensity" 	default="0.25" />
-  <arg name="rollOutsNumber" 	default="8"    />
-  <arg name="enableSwerving" 	default="false"  />
-  <arg name="enableFollowing" 	default="false" />
-	
-  <arg name="horizonDistance" 	default="120"  />
-	
-  <arg name="minFollowingDistance" default="12.0"  /> <!-- should be bigger than Distance to follow -->	
-  <arg name="minDistanceToAvoid"   default="8.0" /> <!-- should be smaller than minFollowingDistance and larger than maxDistanceToAvoid -->
-  <arg name="maxDistanceToAvoid"   default="5.0"  /> <!-- should be smaller than minDistanceToAvoid -->
-  <arg name="speedProfileFactor"   default="1.3"  />
-	
-  <arg name="horizontalSafetyDistance"	default="1"  />
-  <arg name="verticalSafetyDistance"	default="1"  />
-		
-  <arg name="enableTrafficLightBehavior" default="false" />
-  <arg name="enableStopSignBehavior" 	 default="false" />	
-  <arg name="enableLaneChange" 		 default="false" />	
-	
-  <arg name="width" 			default="1.85"  />
-  <arg name="length" 			default="4.2"  />
-  <arg name="wheelBaseLength" 		default="2.7"  />
-  <arg name="turningRadius"		default="2.8"  />
-  <arg name="maxSteerAngle" 		default="0.8" />
-	
-  <arg name="steeringDelay" 		default="1.2" />
-  <arg name="minPursuiteDistance" 	default="2.5"  />
-  <arg name="maxAcceleration" 		default="3"  />
-  <arg name="maxDeceleration"		default="-3"  />
-	
-  <arg name="enableCurbObstacles" 	default="false" /> 
-  <arg name="enableObjectTracking" 	default="false" /> <!-- use internal kalman filter for track obstacles " -->
-  <arg name="enableOutsideControl" 	default="false" /> <!-- use internal kalman filter for track obstacles " -->		
-	
-  <arg name="enableStepByStepSignal" 	default="false" />
-  <arg name="enableSimulatedVelodyne" 	default="false" />  
-	
-  <arg name="mapSource" 		default="2" /> <!-- Autoware=0, Vector Map Folder=1, kml=2, lanelet2=3 -->
-  <arg name="mapFileName" 		value='$(arg kml_map_path)' />
-  <arg name="lanelet2_origin"		default="0,0,0" /> <!-- GPS origin for lanelet2 map files, Lat, Long, Alt  -->
-</include>
-</group>
-</group>
 
 </launch>
