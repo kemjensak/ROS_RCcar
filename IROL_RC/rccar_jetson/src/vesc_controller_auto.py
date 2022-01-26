@@ -18,30 +18,20 @@ class RC_driver():
         self.errCount = 0
         self.max_errCount = 5
         self.serial_port = rospy.get_param('~serial_port','/dev/vesc')
-        self.motor = self.connectVESC()
-        
-        try:
-            self.init_tacho = self.last_tacho = int(self.motor.get_measurements().tachometer)
-        except Exception as e:
-            rospy.logwarn("Getting initail tacho failed during init! reconnecting %d times" % (self.errCount + 1))
-            rospy.sleep(2)
-            self.handleException(e)
-            self.__init__()
-            
-        self.errCount = 0
-        rospy.loginfo("VESC connection succeeded! loaded last tacho %d" % self.init_tacho)
-        
+        self.connectVESC()
         self.steer_offset = rospy.get_param('~steer_offset', -4.5)     
         self.rev_steer_offset = rospy.get_param('~rev_steer_offset',3.8)   
         self.wheelbase = rospy.get_param('~wheelbase',0.320)
         self.maxSteer = rospy.get_param('~maxSteer',0.45) # rad
-        self.tacho_jitter_threshold = rospy.get_param('~tacho_jitter_threshold',60)
-        self.tacho_err = 0
-        self.autoMode = 0 #0
+        self.autoMode = 0
         self.lastMode = 0
         self.steer_rad = 0.0
         self.speed_cmd = 0
-        self.steer_cmd = 0 + self.steer_offset
+        self.steer_cmd = 0
+        self.tacho_jitter_threshold = rospy.get_param('~tacho_jitter_threshold',60)
+        self.tacho_err = 0
+        self.init_tacho = self.set_and_get_vesc(0, 50)
+        rospy.loginfo("VESC connection succeeded! loaded last tacho %d" % self.init_tacho)
 
         self.feedback_msg = vesc_feedback()
         self.vehiclecmd = VehicleCmd()
@@ -54,7 +44,7 @@ class RC_driver():
         rospy.Subscriber("/joy_cmd",Twist ,self.joy_cmdCallback)
         rospy.Subscriber("/joy",Joy ,self.joyCallback)
     
-        self.set_and_get_vesc(0, 50)
+        
         rospy.sleep(0.05)
 
     def connectVESC(self):
@@ -66,7 +56,6 @@ class RC_driver():
             self.handleException(e)
             self.motor = self.connectVESC
         self.errCount = 0
-        return self.motor
 
     def joyCallback(self, data):
         if data.axes[3] == -1.0:
@@ -172,20 +161,13 @@ if __name__ == '__main__':
     rate = rospy.Rate(20)
         
     while not rospy.is_shutdown():
-        
-        # print(time.time())
-        # rospy.sleep(0.01)
-        
-        # current_tacho = set_and_get_vesc(8, self.steer_cmd, 10)
-        
         driver.feedback_msg.tacho.data = driver.set_and_get_vesc(driver.speed_cmd, driver.steer_cmd) - driver.init_tacho
         rospy.loginfo(driver.feedback_msg.tacho.data)
-        # rospy.loginfo(self.steer_rad)
-        # rospy.loginfo(self.steer_cmd)
         driver.feedbackPublisher.publish(driver.feedback_msg)
         rate.sleep()
     
     driver.motor.set_rpm(0)
+    rospy.sleep(0.1)
     driver.motor.set_servo(0.5)
     rospy.sleep(0.1)
     driver.motor.stop_heartbeat()
