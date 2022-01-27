@@ -51,10 +51,6 @@ namespace mobile_robot_odometry
 
             double R = 1.0;
             double meter_per_pulse = 0.004716966;
-            double meter_per_rotate = 0.330;
-            double wheel_rpm_per_speed = 99.4213/9;
-            double ms_per_speed = (meter_per_rotate * wheel_rpm_per_speed) / 60;
-            double speed_per_ms = 1 / ms_per_speed;
             double wheelbase = 0.320;
 
             double dt;

@@ -14,7 +14,6 @@
 
   <node pkg="rccar_jetson" name="scan2cloud" type="scan2cloud.py" output="screen"> </node>  
   <node pkg="rccar_jetson" name="vesc_driver" type="vesc_controller_auto.py" output="screen"> </node>
-  <node pkg="rccar_jetson" name="odom_publisher" type="odom_publisher" output="screen"> </node>
   
   <include file="$(find teleop_twist_joy)/launch/teleop.launch">
     <arg name="joy_config" value='ps4'/>

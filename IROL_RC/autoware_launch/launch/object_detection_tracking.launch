@@ -23,7 +23,7 @@
     <arg name="points_node" default="/points_no_ground" />
   <arg name="remove_ground" default="false" />
   <arg name="downsample_cloud" default="false" /> 
-  <arg name="leaf_size" default="0.1" />
+  <arg name="leaf_size" default="0.05" />
   <arg name="cluster_size_min" default="2" />
   <arg name="cluster_size_max" default="50000" />
   <arg name="sync" default="false" />

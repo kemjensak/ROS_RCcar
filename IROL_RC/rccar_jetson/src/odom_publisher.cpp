@@ -26,6 +26,7 @@ namespace mobile_robot_odometry
     void MobileRobotOdomety::storeFeedback(const rccar_jetson::vesc_feedback::ConstPtr &ptr){
         tacho = ptr->tacho.data;
         steer = ptr->steer.data;
+        pubTF();
     }
 
     void MobileRobotOdomety::boardcastTransform(){
@@ -99,13 +100,10 @@ int main(int argc, char *argv[])
 {
     ros::init(argc, argv, "mobile_robot_odometry");
     mobile_robot_odometry::MobileRobotOdomety MRO;
-    ros::Rate loop_rate(10); // dt is always 100ms
+    ros::Rate loop_rate(20); // dt is always 100ms
 
     while(ros::ok()){
-        
-        MRO.pubTF();
-        loop_rate.sleep();
-        ros::spinOnce();
+        ros::spin();
         
     }
     return 0;
