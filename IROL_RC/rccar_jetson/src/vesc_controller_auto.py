@@ -21,7 +21,7 @@ class RC_driver():
         self.steer_offset = rospy.get_param('~steer_offset', -4.5)     
         self.rev_steer_offset = rospy.get_param('~rev_steer_offset',3.8)   
         self.wheelbase = rospy.get_param('~wheelbase',0.320)
-        self.maxSteer = rospy.get_param('~maxSteer',0.45) # rad
+        self.maxSteer = rospy.get_param('~maxSteer',0.52) # rad
         self.tacho_jitter_threshold = rospy.get_param('~tacho_jitter_threshold',60)
         self.connectVESC()
         self.getInitialTacho()
@@ -120,10 +120,10 @@ class RC_driver():
     def set_and_get_vesc(self, speed, steer):
         try:
             if speed < 0:
-                self.motor.set_servo((50 - steer*1.8 - self.rev_steer_offset) / 100) # 1.8 -> servo/steer(deg)
+                self.motor.set_servo((50 - steer*1.4 - self.rev_steer_offset) / 100) # 1.8 -> servo/steer(deg)
                 # self.motor.set_servo((((self.rev_steer_offset - 27.6) / 30) * steer + (50 - self.rev_steer_offset)) / 100) 잘못됨
             else:
-                self.motor.set_servo((50 - steer*1.8 + self.steer_offset) / 100)
+                self.motor.set_servo((50 - steer*1.4 + self.steer_offset) / 100)
                 # self.motor.set_servo((((self.steer_offset - 27.6) / 30) * steer + (50 - self.rev_steer_offset)) / 100) 잘못됨
             
             rospy.sleep(0.02)

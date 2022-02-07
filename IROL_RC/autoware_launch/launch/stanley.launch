@@ -28,14 +28,14 @@
   
 
   <!-- rosrun waypoint_follower pure_pursuit -->
-  <node pkg="pure_pursuit" type="pure_pursuit" name="pure_pursuit" output="log">
-    <param name="is_linear_interpolation" value="$(arg is_linear_interpolation)"/>
+  <arg name="next_distance_threshold" default="0.5"/>
+  <arg name="control_gain" default="1.0"/>
+
+  <!-- rosrun waypoint_follower stanley -->
+  <node pkg="stanley" type="stanley" name="stanley" output="screen">/>
     <param name="publishes_for_steering_robot" value="$(arg publishes_for_steering_robot)"/>
     <param name="add_virtual_end_waypoints" value="$(arg add_virtual_end_waypoints)"/>
-    <param name="const_lookahead_distance" value="$(arg const_lookahead_distance)"/>
     <param name="const_velocity" value="$(arg const_velocity)"/>
-    <param name="lookahead_ratio" value="$(arg lookahead_ratio)"/>
-    <param name="minimum_lookahead_distance" value="$(arg minimum_lookahead_distance)"/>
     <param name="velocity_source" value="$(arg velocity_source)"/>
   </node>
 

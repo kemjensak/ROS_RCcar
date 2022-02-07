@@ -13,10 +13,10 @@
 		
 	<arg name="pathDensity" 		default="0.20" />
 	<arg name="rollOutDensity" 		default="0.15" />
-	<arg name="rollOutsNumber" 		default="8"    />
+	<arg name="rollOutsNumber" 		default="6"    />
 
-	<arg name="maxLocalPlanDistance" 	default="15" />	
-	<arg name="horizonDistance" 		default="20"  />
+	<arg name="maxLocalPlanDistance" 	default="9" />	
+	<arg name="horizonDistance" 		default="15"  />
 	
 	<arg name="minFollowingDistance" 	default="1.0"  /> <!-- should be bigger than Distance to follow -->	
 	<arg name="minDistanceToAvoid" 		default="0.2" /> <!-- should be smaller than minFollowingDistance and larger than maxDistanceToAvoid -->
@@ -26,7 +26,7 @@
 	<arg name="smoothingDataWeight"		default="0.45"  />
 	<arg name="smoothingSmoothWeight"	default="0.4"  />	
 	
-	<arg name="horizontalSafetyDistance"	default="0.1"  />
+	<arg name="horizontalSafetyDistance"	default="0.15"  />
 	<arg name="verticalSafetyDistance"	default="0.4"  />
 	
 	<arg name="enableSwerving" 		default="true"  />
@@ -46,8 +46,8 @@
 	<arg name="maxWheelAngle" 		default="0.85" />
 	<arg name="steeringDelay" 		default="0.1" />
 	<arg name="minPursuiteDistance" 	default="0.5" />
-	<arg name="maxVelocity" 		default="4.0" />
-	<arg name="minVelocity" 		default="0.7" />
+	<arg name="maxVelocity" 		default="0.4" />
+	<arg name="minVelocity" 		default="0.1" />
 	<arg name="maxAcceleration" 		default="4" />
 	<arg name="maxDeceleration" 		default="-3" />
 	<!-- Internal ACC parameters -->

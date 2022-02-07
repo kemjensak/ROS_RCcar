@@ -1,10 +1,10 @@
 frequency: 20
-sensor_timeout: 0.5
+sensor_timeout: 0.02
 
 two_d_mode: true
 transform_time_offset: 0.0
 
-transform_timeout: 0.1
+transform_timeout: 0.02
 
 print_diagnostics: false
 debug: false
@@ -33,8 +33,8 @@ odom0_differential: false
 
 odom0_relative: false
 
-odom0_pose_rejection_threshold: 10
-odom0_twist_rejection_threshold: 10
+odom0_pose_rejection_threshold: 9
+odom0_twist_rejection_threshold: 9
 
 imu0: /imu/data
 imu0_config: [false, false, false,
@@ -57,13 +57,13 @@ use_control: true
 
 stamped_control: false
 
-control_timeout: 0.05
+control_timeout: 0.02
 
 control_config: [true, false, false, false, false, true]
 
-acceleration_limits: [3.3, 0.0, 0.0, 0.0, 0.0, 3.4]
+acceleration_limits: [4, 0.0, 0.0, 0.0, 0.0, 3.4]
 
-deceleration_limits: [3.3, 0.0, 0.0, 0.0, 0.0, 4.5]
+deceleration_limits: [4, 0.0, 0.0, 0.0, 0.0, 4.5]
 
 acceleration_gains: [0.8, 0.0, 0.0, 0.0, 0.0, 0.9]
 

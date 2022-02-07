@@ -1,0 +1,27 @@
+<launch> 
+
+  <arg name="osm_map_path" default="$(find rccar_jetson)/maps/hallway_normalized.osm"/><!-- set lanenet2 in op launch files. NOT kml! -->
+  <arg name="grid_map_path" default="$(find rccar_jetson)/maps/mymap.yaml"/>
+  
+  <include file="$(find rccar_jetson)/launch/sim_bringup.launch"/>
+
+  <include file="$(find wf_simulator)/launch/wf_simulator.launch">
+    <arg name="loop_rate" default="50.0"/>
+    <arg name="lidar_height" default="0.1"/>
+    <arg name="lidar_frame_id" default="laser"/>
+    <arg name="vehicle_model_type" default="DELAY_STEER"/>
+  </include>
+  
+    <!-- map server -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg grid_map_path)" >
+    <param name="frame_id" value="map"/>
+  </node>
+   
+  <include file="$(find autoware_launch)/launch/autoware.launch">
+    <arg name="kml_map_path" value='$(arg osm_map_path)'/>
+  </include>
+  
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find rccar_jetson)/cfg/rviz_config.rviz" />
+
+
+</launch>

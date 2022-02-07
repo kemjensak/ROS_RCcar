@@ -9,8 +9,8 @@
     @todo: still required?
   -->
 <include file="$(find op_local_planner)/launch/op_trajectory_generator.launch">
-	<arg name="samplingTipMargin" 		default="0.5"  /> 
-	<arg name="samplingOutMargin" 		default="1.0" /> 
+	<arg name="samplingTipMargin" 		default="0.2"  /> 
+	<arg name="samplingOutMargin" 		default="0.35" /> 
 	<arg name="samplingSpeedFactor" 	default="1.0" />		
 	<arg name="enableHeadingSmoothing" 	default="false" />
 	<arg name="startFromFrontAxel" 		default="false" />
