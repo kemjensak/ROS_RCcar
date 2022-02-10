@@ -1,0 +1,21 @@
+<!-- -->
+<launch>
+  <arg name="publishes_for_steering_robot" default="False"/>
+  <arg name="add_virtual_end_waypoints" default="False"/>
+  <arg name="const_velocity" default="5.0"/>
+  <arg name="next_distance_threshold" default="0.5"/>
+  <arg name="control_gain" default="0.5"/>
+
+  <!-- 0 = waypoints, 1 = provided constant velocity -->
+  <arg name="next_distance_threshold" default="20"/>
+  <arg name="velocity_source" default="0"/>
+  <arg name="max_steer" default="1.0472"/> <!--60 degree to rad-->
+
+  <!-- rosrun waypoint_follower stanley -->
+  <node pkg="stanley" type="stanley" name="stanley" output="screen">/>
+    <param name="publishes_for_steering_robot" value="$(arg publishes_for_steering_robot)"/>
+    <param name="add_virtual_end_waypoints" value="$(arg add_virtual_end_waypoints)"/>
+    <param name="const_velocity" value="$(arg const_velocity)"/>
+    <param name="velocity_source" value="$(arg velocity_source)"/>
+  </node>
+</launch>

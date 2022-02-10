@@ -1,0 +1,6 @@
+serial_port: '/dev/vesc'
+steer_offset: -4.5    
+rev_steer_offset: 3.8 
+wheelbase: 0.320
+maxSteer: 0.52 # rad
+tacho_jitter_threshold: 60

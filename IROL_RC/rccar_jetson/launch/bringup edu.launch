@@ -28,8 +28,8 @@
   </include>
 
   <node pkg="rccar_jetson" name="vesc_odom_publisher" type="odom_publisher" output="screen">
-    <param name="meter_per_pulse"     type="float16"   value="0.004716966"/>  
-    <param name="wheelbase"           type="float16"   value="0.320"/>    
+    <param name="meter_per_pulse"     type="float16"   value="0.004166666"/>  
+    <param name="wheelbase"           type="float16"   value="0.257"/>    
   </node>
   <node pkg="rccar_jetson" name="amcl_pose_transformer" type="pose_transformer.py" output="screen"> </node>
 

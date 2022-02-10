@@ -36,7 +36,7 @@ namespace mobile_robot_odometry
             ros::Publisher odomPub;
             ros::Publisher velPub;
 
-            std::string base_link_id, odom_link_id, wheel_1_id, wheel_3_id;
+            std::string base_link_id, odom_link_id;
             double separation_length;
             double delta_x, delta_y, delta_th;
             double v, vx, vy, vth;
@@ -44,14 +44,10 @@ namespace mobile_robot_odometry
             int seq;
             tf::TransformBroadcaster br;
 
-            double velocity;
-            double wheel_1_velocity;
-            double wheel_3_velocity;
             ros::Time last_time;
 
-            double R = 1.0;
-            double meter_per_pulse = 0.004716966;
-            double wheelbase = 0.320;
+            double meter_per_pulse;
+            double wheelbase;
 
             double dt;
 

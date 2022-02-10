@@ -3,7 +3,7 @@
 namespace mobile_robot_odometry
 {
     MobileRobotOdomety::MobileRobotOdomety()
-	: private_nh("~")
+    : private_nh("~")
     , seq(0)
 	, x(0.0)
 	, y(0.0)
@@ -12,6 +12,8 @@ namespace mobile_robot_odometry
         sub = nh.subscribe("/vesc_feedback", 100, &MobileRobotOdomety::storeFeedback, this);
         odomPub = nh.advertise<nav_msgs::Odometry>("/vesc/odom",100);
         velPub = nh.advertise<geometry_msgs::TwistStamped>("/current_velocity",100);
+        private_nh.getParam("meter_per_pulse", meter_per_pulse);
+        private_nh.getParam("wheelbase", wheelbase);
         base_link_id = "base_link";
         odom_link_id = "odom";    
         last_time = ros::Time::now();
