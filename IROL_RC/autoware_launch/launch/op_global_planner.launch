@@ -1,7 +1,7 @@
 <!-- -->
 <launch>
 <arg name="op_logs_experiment_folder_name" default=""/>
-<arg name="kml_map_path" default=""/>
+<arg name="kml_map_path" default="$(find rccar_jetson)/maps/hallway_bothway_extended"/>
 
   <!-- 
     # open planner, global planner params #

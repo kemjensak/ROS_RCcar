@@ -1,6 +1,6 @@
 <launch> 
 
-  <arg name="osm_map_path" default="$(find rccar_jetson)/maps/hallway_normalized.osm"/><!-- set lanenet2 in op launch files. NOT kml! -->
+  <arg name="osm_map_path" default="$(find rccar_jetson)/maps/hallway_bothway_extended.osm"/><!-- set lanenet2 map path in op launch files. NOT kml! -->
   <arg name="grid_map_path" default="$(find rccar_jetson)/maps/mymap.yaml"/>
   
   <include file="$(find rccar_jetson)/launch/bringup.launch"/>
@@ -28,8 +28,8 @@
     <param name="odom_alpha1" value="0.6"/>
     <param name="odom_alpha2" value="0.6"/>
     <!-- translation std dev, m -->
-    <param name="odom_alpha3" value="0.4"/>
-    <param name="odom_alpha4" value="0.4"/>
+    <param name="odom_alpha3" value="0.5"/>
+    <param name="odom_alpha4" value="0.5"/>
     <param name="laser_z_hit" value="0.9"/>
     <param name="laser_z_short" value="0.05"/>
     <param name="laser_z_max" value="0.05"/>

@@ -47,7 +47,7 @@
 	<arg name="steeringDelay" 		default="0.1" />
 	<arg name="minPursuiteDistance" 	default="0.5" />
 	<arg name="maxVelocity" 		default="1.5" />
-	<arg name="minVelocity" 		default="0.8" />
+	<arg name="minVelocity" 		default="0.9" />
 	<arg name="maxAcceleration" 		default="4" />
 	<arg name="maxDeceleration" 		default="-2" />
 	<!-- Internal ACC parameters -->
