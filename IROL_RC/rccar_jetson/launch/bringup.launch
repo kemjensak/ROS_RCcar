@@ -13,13 +13,13 @@
   </node>
 
   <node pkg="rccar_jetson" name="scan2cloud" type="scan2cloud.py" output="screen"> </node>  
-  <node pkg="rccar_jetson" name="vesc_driver" type="vesc_controller_auto.py" output="screen">
+  <node pkg="rccar_jetson" name="vesc_driver" type="vesc_controller_auto.py" output="screen" respawn="true">
     <param name="serial_port"            type="string"     value="/dev/vesc"/>
-    <param name="steer_offset"           type="float16"    value="-4.5"/>
-    <param name="rev_steer_offset"       type="float16"    value="3.8"/>
-    <param name="wheelbase"              type="float16"    value="0.320"/>
-    <param name="maxSteer"               type="float16"    value="0.52"/>  
-    <param name="tacho_jitter_threshold" type="int8"       value="60"/>  
+    <param name="steer_offset"           type="double"    value="-4.5"/>
+    <param name="rev_steer_offset"       type="double"    value="3.8"/>
+    <param name="wheelbase"              type="double"    value="0.320"/>
+    <param name="maxSteer"               type="double"    value="0.52"/>  
+    <param name="tacho_jitter_threshold" type="int"       value="60"/>  
   </node>
   
   <include file="$(find teleop_twist_joy)/launch/teleop.launch">
@@ -28,8 +28,8 @@
   </include>
 
   <node pkg="rccar_jetson" name="vesc_odom_publisher" type="odom_publisher" output="screen">
-    <param name="meter_per_pulse"     type="float16"   value="0.004716966"/>  
-    <param name="wheelbase"           type="float16"   value="0.320"/>    
+    <param name="meter_per_pulse"     type="double"   value="0.004716966"/>  
+    <param name="wheelbase"           type="double"   value="0.320"/>    
   </node>
   <node pkg="rccar_jetson" name="amcl_pose_transformer" type="pose_transformer.py" output="screen"> </node>
 

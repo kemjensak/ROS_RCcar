@@ -29,7 +29,7 @@
 
   <!-- rosrun waypoint_follower pure_pursuit -->
   <arg name="next_distance_threshold" default="1"/>
-  <arg name="control_gain" default="0.5"/>
+  <arg name="control_gain" default="0"/>
   <arg name="max_steer" default="1.0472"/> <!--60 degree to rad-->
   <arg name="max_cross_track_error" default="5"/>
   

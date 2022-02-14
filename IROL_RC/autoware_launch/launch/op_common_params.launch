@@ -46,15 +46,15 @@
 	<arg name="maxWheelAngle" 		default="0.85" />
 	<arg name="steeringDelay" 		default="0.1" />
 	<arg name="minPursuiteDistance" 	default="0.5" />
-	<arg name="maxVelocity" 		default="0.4" />
-	<arg name="minVelocity" 		default="0.1" />
+	<arg name="maxVelocity" 		default="1.5" />
+	<arg name="minVelocity" 		default="0.8" />
 	<arg name="maxAcceleration" 		default="4" />
-	<arg name="maxDeceleration" 		default="-3" />
+	<arg name="maxDeceleration" 		default="-2" />
 	<!-- Internal ACC parameters -->
 	<arg name="use_internal_acc" 		default="true" />
 	<arg name="accelerationPushRatio" 	default="5" />
 	<arg name="brakingPushRatio" 		default="7" />
-	<arg name="curveSlowDownRatio" 		default="1.0" />	
+	<arg name="curveSlowDownRatio" 		default="0.6" />	
 	<!-- ................................................... -->
 
 	<arg name="additionalBrakingDistance"   default="0.20" />	
