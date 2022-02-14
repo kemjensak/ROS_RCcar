@@ -1,0 +1,31 @@
+<!-- -->
+<launch>
+  <arg name="enable_openplanner_simulation" default="false"/>
+  <arg name="enable_object_insert" default="false"/>
+  <arg name="kml_map_path" default="$(find rccar_jetson)/maps/hallway_bothway_extended.osm"/><!-- set lanenet2 in op launch files. NOT kml! -->
+  <arg name="wheel_base" default="0.32"/> <!-- for DEMO(Traxxas slash platinum) -->
+
+  
+
+  <!--include file="$(find autoware_launch)/launch/vel_pose_connector.launch"/-->
+
+  <include file="$(find autoware_launch)/launch/object_detection_tracking.launch">
+  	<arg name='enable_openplanner_simulation' value='$(arg enable_openplanner_simulation)'/>
+  	<arg name='enable_object_insert' value='$(arg enable_object_insert)'/>
+  </include>
+
+  <include file="$(find autoware_launch)/launch/op_common_params.launch">  
+	  <arg name="kml_map_path" value='$(arg kml_map_path)'/>
+  </include>
+
+  <include file="$(find autoware_launch)/launch/op_local_planner.launch">  
+  	<arg name='enable_openplanner_simulation' value='$(arg enable_openplanner_simulation)'/>
+  	<arg name='enable_object_insert' value='$(arg enable_object_insert)'/>
+	<arg name="kml_map_path" value='$(arg kml_map_path)'/>
+  </include>
+
+  <include file="$(find autoware_launch)/launch/pure_pursuit_controller.launch">  
+  	<arg name='wheel_base' value='$(arg wheel_base)'/>
+  </include> 
+
+</launch>
